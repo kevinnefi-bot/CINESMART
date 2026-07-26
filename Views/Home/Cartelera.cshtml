@@ -7,16 +7,17 @@
 
 <section class="page-header">
     <div class="container text-center">
-        <span class="hero-badge">🎬 ESTRENOS Y FUNCIONES</span>
+        <span class="hero-badge">🎬 CARTELERA OFICIAL</span>
         <h1>Cartelera de Cine</h1>
-        <p>Selecciona tu película favorita y reserva tus asientos para la mejor función.</p>
+        <p>Toca cualquier película para conocer su sinopsis, reparto y horarios disponibles.</p>
         
         <!-- Filtros por Género -->
         <div class="genre-filters mt-4">
             <a asp-action="Cartelera" asp-route-genero="Todos" class="filter-chip @(generoSel == "Todos" ? "active" : "")">Todos</a>
-            <a asp-action="Cartelera" asp-route-genero="Ciencia ficción" class="filter-chip @(generoSel == "Ciencia ficción" ? "active" : "")">🚀 Ciencia Ficción</a>
             <a asp-action="Cartelera" asp-route-genero="Acción" class="filter-chip @(generoSel == "Acción" ? "active" : "")">💥 Acción</a>
+            <a asp-action="Cartelera" asp-route-genero="Terror" class="filter-chip @(generoSel == "Terror" ? "active" : "")">👁️ Terror</a>
             <a asp-action="Cartelera" asp-route-genero="Animación" class="filter-chip @(generoSel == "Animación" ? "active" : "")">🎨 Animación</a>
+            <a asp-action="Cartelera" asp-route-genero="Ciencia ficción" class="filter-chip @(generoSel == "Ciencia ficción" ? "active" : "")">🚀 Ciencia Ficción</a>
         </div>
     </div>
 </section>
@@ -35,31 +36,29 @@
             @foreach (var pelicula in Model)
             {
                 <div class="col-lg-6">
-                    <div class="movie-horizontal-card">
-                        <div class="poster-box">
-                            <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-horizontal" />
-                            <span class="badge-format">⭐ @pelicula.Calificacion</span>
-                        </div>
-                        <div class="movie-detail-box">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="genre-tag">@pelicula.Genero</span>
-                                <span class="rating-pill">🔞 @pelicula.Clasificacion</span>
+                    <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="text-decoration-none">
+                        <div class="movie-horizontal-card">
+                            <div class="poster-box">
+                                <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-horizontal" />
+                                <span class="badge-format">⭐ @pelicula.Calificacion</span>
                             </div>
-                            <h3>@pelicula.Titulo</h3>
-                            <p>@pelicula.Descripcion</p>
-                            <div class="meta-info mb-3">
-                                <span>⏱️ <strong>Duración:</strong> @pelicula.Duracion</span>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn-glass py-2 px-3 fs-6">
-                                    ℹ️ Ver Sinopsis
-                                </a>
-                                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-primary-action flex-grow-1 text-center">
-                                    🎟️ Comprar Entradas
-                                </a>
+                            <div class="movie-detail-box">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="genre-tag">@pelicula.Genero</span>
+                                    <span class="rating-pill">🔞 @pelicula.Clasificacion</span>
+                                </div>
+                                <h3 class="text-light fs-4 mb-2">@pelicula.Titulo</h3>
+                                <p class="text-muted small line-clamp-2">@pelicula.Descripcion</p>
+                                <div class="meta-info my-2">
+                                    <span class="text-light small">⏱️ <strong>Duración:</strong> @pelicula.Duracion</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary border-opacity-25">
+                                    <span class="text-gold font-weight-bold">ℹ️ Ver detalles &rarr;</span>
+                                    <span class="btn-primary-action py-1 px-3 fs-6">🎟️ Reservar</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         </div>

@@ -21,7 +21,7 @@
                 <a class="navbar-brand cinema-logo" asp-controller="Home" asp-action="Index">
                     <span class="logo-icon">🎬</span> <span class="logo-text">CINE<span class="highlight">SMART</span></span>
                 </a>
-                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mainNavigation">
@@ -34,9 +34,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Combos">🍿 Combos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="BuscarReserva">🔍 Consultar Reserva</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Admin">📊 Panel Admin</a>
@@ -62,11 +59,10 @@
                     <p>La mejor experiencia cinematográfica al alcance de un clic.</p>
                 </div>
                 <div class="footer-links">
-                    <h5>Subprogramas</h5>
+                    <h5>Navegación</h5>
                     <ul>
                         <li><a asp-controller="Home" asp-action="Cartelera">Películas en Cartelera</a></li>
-                        <li><a asp-controller="Home" asp-action="Combos">Combos & Dulcería</a></li>
-                        <li><a asp-controller="Home" asp-action="BuscarReserva">Consultar mi Reserva</a></li>
+                        <li><a asp-controller="Home" asp-action="Combos">Combos de Comida</a></li>
                         <li><a asp-controller="Home" asp-action="Admin">Panel Administrativo</a></li>
                     </ul>
                 </div>

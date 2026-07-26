@@ -7,30 +7,30 @@
 <section class="hero-banner">
     <div class="hero-overlay"></div>
     <div class="container hero-content text-center">
-        <span class="hero-badge">🍿 CARTELERA EXCLUSIVA 2026</span>
+        <span class="hero-badge">🍿 ESTRENOS 2026</span>
         <h1 class="hero-title">Vive la Magia del Cine en <span class="text-gold">CINESMART</span></h1>
         <p class="hero-description">
-            Disfruta de los últimos estrenos en salas Dolby Atmos, pantallas 4K Laser y con los mejores combos de palomitas directo a tu asiento.
+            Elige tu película preferida, selecciona tus asientos e incluye tus combos de dulcería favoritos.
         </p>
         <div class="hero-buttons">
             <a asp-controller="Home" asp-action="Cartelera" class="btn-glow-gold">
                 🎬 Ver Cartelera Completa
             </a>
-            <a asp-controller="Home" asp-action="BuscarReserva" class="btn-glass">
-                🔍 Consultar mi Reserva
+            <a asp-controller="Home" asp-action="Combos" class="btn-glass">
+                🍿 Ver Combos
             </a>
         </div>
     </div>
 </section>
 
-<!-- Películas Destacadas con Imágenes Reales -->
+<!-- Películas Destacadas (Hacer clic en la tarjeta navega a Detalles) -->
 <section class="featured-section container py-5">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <div>
             <span class="sub-title">EN PANTALLA GRANDE</span>
             <h2 class="section-title">Películas Destacadas</h2>
         </div>
-        <a asp-controller="Home" asp-action="Cartelera" class="view-all-link">Ver todas &rarr;</a>
+        <a asp-controller="Home" asp-action="Cartelera" class="view-all-link">Ver todas las películas &rarr;</a>
     </div>
 
     <div class="row g-4">
@@ -39,59 +39,58 @@
             @foreach (var pelicula in Model)
             {
                 <div class="col-lg-4 col-md-6">
-                    <div class="movie-card-modern">
-                        <div class="poster-wrapper">
-                            <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-img" />
-                            <span class="badge-rating">⭐ @pelicula.Calificacion</span>
-                            <span class="badge-duration">⏱️ @pelicula.Duracion</span>
-                        </div>
-                        <div class="movie-card-body">
-                            <span class="genre-tag">@pelicula.Genero</span>
-                            <h3 class="movie-card-title">@pelicula.Titulo</h3>
-                            <p class="movie-card-desc">@pelicula.Descripcion</p>
-                            <div class="d-flex gap-2">
-                                <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn-card-details flex-grow-1 text-center">
-                                    ℹ️ Ver Detalle
-                                </a>
-                                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-card-buy flex-grow-1 text-center">
-                                    🎟️ Comprar
-                                </a>
+                    <!-- Al hacer clic en cualquier parte de la tarjeta se entra al subprograma de Detalles -->
+                    <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="movie-card-link text-decoration-none">
+                        <div class="movie-card-modern">
+                            <div class="poster-wrapper">
+                                <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-img" />
+                                <span class="badge-rating">⭐ @pelicula.Calificacion</span>
+                                <span class="badge-duration">⏱️ @pelicula.Duracion</span>
+                            </div>
+                            <div class="movie-card-body">
+                                <span class="genre-tag">@pelicula.Genero</span>
+                                <h3 class="movie-card-title text-light">@pelicula.Titulo</h3>
+                                <p class="movie-card-desc">@pelicula.Descripcion</p>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="text-gold font-weight-bold">Ver Detalles &rarr;</span>
+                                    <span class="btn-card-buy-sm">🎟️ Comprar</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         }
     </div>
 </section>
 
-<!-- Ventajas CINESMART -->
+<!-- Sección de Beneficios -->
 <section class="features-section py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <span class="sub-title">EXPERIENCIA PREMIUM</span>
-            <h2 class="section-title">¿Por qué elegir CINESMART?</h2>
+            <span class="sub-title">EXPERIENCIA CINESMART</span>
+            <h2 class="section-title">¿Cómo funciona?</h2>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="feature-box">
-                    <div class="feature-icon-wrapper">📽️</div>
-                    <h4>Proyección 4K & Dolby</h4>
-                    <p>Imágenes hiperrealistas con sonido envolvente Dolby Atmos en todas nuestras salas.</p>
+                    <div class="feature-icon-wrapper">🎬</div>
+                    <h4>1. Elige tu Película</h4>
+                    <p>Explora la cartelera y conoce la sinopsis completa y elenco de cada película.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-box">
                     <div class="feature-icon-wrapper">💺</div>
-                    <h4>Asientos Numerados</h4>
-                    <p>Elige tu asiento preferido desde tu celular o computadora en tiempo real.</p>
+                    <h4>2. Selecciona Asientos</h4>
+                    <p>Escoge tu horario y selecciona tus asientos preferidos en tiempo real.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-box">
-                    <div class="feature-icon-wrapper">🥤</div>
-                    <h4>Combos Exclusivos</h4>
-                    <p>Acompaña tu película con nuestros deliciosos combos de dulcería.</p>
+                    <div class="feature-icon-wrapper">🍿</div>
+                    <h4>3. Agrega tus Combos</h4>
+                    <p>Acompaña tu boleto con combos individuales, en pareja o familiares.</p>
                 </div>
             </div>
         </div>

@@ -4,61 +4,93 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CINESMART.Controllers
 {
+    // Controlador principal que administra las vistas y subprogramas del cine
     public class HomeController : Controller
     {
-        // 1. Página de Inicio: Muestra las primeras 3 películas destacadas
+        // 1. Subprograma: Página de Inicio
         public IActionResult Index()
         {
             var destacadas = CineData.Peliculas.Take(3).ToList();
             return View(destacadas);
         }
 
-        // 2. Cartelera: Lista de películas con soporte para filtro por género
+        // 2. Subprograma: Cartelera completa con filtro por género
         public IActionResult Cartelera(string? genero)
         {
             var peliculas = CineData.Peliculas;
-            if (!string.IsNullOrEmpty(genero) && genero != "Todos")
+            if (!string.IsNullOrWhiteSpace(genero) && genero != "Todos")
             {
-                peliculas = peliculas.Where(p => p.Genero.Contains(genero, StringComparison.OrdinalIgnoreCase)).ToList();
+                peliculas = peliculas.Where(p => p.Genero.Equals(genero, StringComparison.OrdinalIgnoreCase)).ToList();
             }
             ViewBag.GeneroSeleccionado = genero ?? "Todos";
             return View(peliculas);
         }
 
-        // 3. Detalles de Película: Vista con sinopsis completa, reparto y trailer simulado
+        // 3. Subprograma: Ficha Técnica y Detalles de Película
         public IActionResult Detalles(int id)
         {
-            var pelicula = CineData.Peliculas.FirstOrDefault(p => p.Id == id);
+            var pelicula = CineData.ObtenerPeliculaPorId(id);
             if (pelicula == null)
             {
                 return NotFound();
             }
-            ViewBag.Funciones = CineData.Funciones.Where(f => f.PeliculaId == id).ToList();
+
+            ViewBag.Funciones = CineData.ObtenerFuncionesPorPelicula(id);
             return View(pelicula);
         }
 
-        // 4. Seccion de Combos & Dulceria
-        public IActionResult Combos()
-        {
-            return View(CineData.Combos);
-        }
-
-        // 5. Formulario para Comprar Entradas
+        // 4. PASO 1 de Compra: Selección de Función, Cantidad de Boletos y Asientos
         public IActionResult Comprar(int id = 1)
         {
-            var pelicula = CineData.Peliculas.FirstOrDefault(p => p.Id == id);
+            var pelicula = CineData.ObtenerPeliculaPorId(id);
             if (pelicula == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Funciones = CineData.Funciones.Where(f => f.PeliculaId == id).ToList();
-            ViewBag.Combos = CineData.Combos;
-
+            ViewBag.Funciones = CineData.ObtenerFuncionesPorPelicula(id);
             return View(pelicula);
         }
 
-        // 6. Procesa la reserva y guarda la compra en memoria
+        // 5. PASO 2 de Compra: Selección opcional de Combos & Dulcería
+        [HttpPost]
+        public IActionResult AgregarCombo(
+            string cliente,
+            string correo,
+            int funcionId,
+            int cantidadEntradas,
+            string? asientosSeleccionados)
+        {
+            var funcion = CineData.Funciones.FirstOrDefault(f => f.Id == funcionId);
+            if (funcion == null) return NotFound();
+
+            var pelicula = CineData.ObtenerPeliculaPorId(funcion.PeliculaId);
+            if (pelicula == null) return NotFound();
+
+            if (cantidadEntradas < 1) cantidadEntradas = 1;
+
+            decimal subtotal = funcion.Precio * cantidadEntradas;
+
+            List<string> listaAsientos = new();
+            if (!string.IsNullOrWhiteSpace(asientosSeleccionados))
+            {
+                listaAsientos = asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+            }
+
+            // Datos temporales para la vista de selección de combo
+            ViewBag.Cliente = cliente;
+            ViewBag.Correo = correo;
+            ViewBag.Funcion = funcion;
+            ViewBag.Pelicula = pelicula;
+            ViewBag.CantidadEntradas = cantidadEntradas;
+            ViewBag.AsientosSeleccionados = string.Join(",", listaAsientos);
+            ViewBag.Subtotal = subtotal;
+            ViewBag.Combos = CineData.Combos;
+
+            return View("AgregarCombo");
+        }
+
+        // 6. Procesa la reserva final y muestra el boleto digital con QR
         [HttpPost]
         public IActionResult ConfirmarCompra(
             string cliente,
@@ -71,12 +103,12 @@ namespace CINESMART.Controllers
             var funcion = CineData.Funciones.FirstOrDefault(f => f.Id == funcionId);
             if (funcion == null) return NotFound();
 
-            var pelicula = CineData.Peliculas.FirstOrDefault(p => p.Id == funcion.PeliculaId);
+            var pelicula = CineData.ObtenerPeliculaPorId(funcion.PeliculaId);
             if (pelicula == null) return NotFound();
 
             if (cantidadEntradas < 1) cantidadEntradas = 1;
 
-            var combo = CineData.Combos.FirstOrDefault(c => c.Id == comboId);
+            var combo = CineData.ObtenerComboPorId(comboId);
             decimal precioCombos = combo?.Precio ?? 0;
             decimal precioEntradas = funcion.Precio * cantidadEntradas;
             decimal total = precioEntradas + precioCombos;
@@ -86,6 +118,9 @@ namespace CINESMART.Controllers
             {
                 listaAsientos = asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
             }
+
+            // Generación de código único de reserva (ej. CS-492019)
+            string codigoGenerado = $"CS-{Random.Shared.Next(100000, 999999)}";
 
             var compra = new Compra
             {
@@ -104,31 +139,22 @@ namespace CINESMART.Controllers
                 ComboNombre = combo?.Nombre ?? "Sin combo",
                 PrecioCombos = precioCombos,
                 Total = total,
-                CodigoReserva = $"CS-{Random.Shared.Next(100000, 999999)}"
+                CodigoReserva = codigoGenerado
             };
 
-            // Guardar en nuestra lista estática de reservas
+            // Guardar compra en la lista estática
             CineData.Reservas.Add(compra);
 
             return View("Confirmacion", compra);
         }
 
-        // 7. Buscador de Reservas por Código (ej. CS-884920)
-        public IActionResult BuscarReserva(string? codigo)
+        // 7. Subprograma de Combos (Vista independiente de dulcería)
+        public IActionResult Combos()
         {
-            if (string.IsNullOrWhiteSpace(codigo))
-            {
-                return View((Compra?)null);
-            }
-
-            var reserva = CineData.Reservas.FirstOrDefault(r => 
-                r.CodigoReserva.Equals(codigo.Trim(), StringComparison.OrdinalIgnoreCase));
-            
-            ViewBag.CodigoBuscado = codigo;
-            return View(reserva);
+            return View(CineData.Combos);
         }
 
-        // 8. Subprograma / Panel Administrador para ver ventas y estadísticas del cine
+        // 8. Subprograma: Panel de Administración para ver estadísticas del cine
         public IActionResult Admin()
         {
             ViewBag.TotalRecaudado = CineData.Reservas.Sum(r => r.Total);

@@ -9,61 +9,63 @@
     <div class="container text-center">
         <span class="hero-badge">🎬 FICHA TÉCNICA DE PELÍCULA</span>
         <h1>@Model.Titulo</h1>
-        <p>Conoce los detalles, elenco, sinopsis completa y horarios para reservar tus boletos.</p>
+        <p>Conoce los detalles, elenco, sinopsis completa y horarios disponibles.</p>
     </div>
 </section>
 
 <section class="container py-5">
-    <div class="movie-details-hero p-4 p-md-5 rounded-4 border border-secondary border-opacity-25" style="background: rgba(18, 18, 28, 0.85); backdrop-filter: blur(12px);">
+    <div class="movie-details-hero p-4 p-md-5 rounded-4 border border-warning border-opacity-25" style="background: #12121c; box-shadow: 0 15px 40px rgba(0,0,0,0.7);">
         <div class="row g-4 align-items-center">
             <div class="col-md-4 text-center">
-                <img src="@Model.Imagen" alt="@Model.Titulo" class="img-fluid rounded-4 shadow-lg" style="max-height: 450px;" />
+                <img src="@Model.Imagen" alt="@Model.Titulo" class="img-fluid rounded-4 shadow-lg border border-secondary" style="max-height: 460px; width: 100%; object-fit: cover;" />
             </div>
             <div class="col-md-8">
-                <div class="d-flex align-items-center gap-3 mb-2">
+                <div class="d-flex align-items-center gap-2 flex-wrap mb-3">
                     <span class="genre-tag fs-6">@Model.Genero</span>
-                    <span class="badge bg-warning text-dark font-weight-bold">⭐ @Model.Calificacion / 5.0</span>
-                    <span class="badge bg-secondary">🔞 @Model.Clasificacion</span>
-                    <span class="badge bg-dark border border-secondary">⏱️ @Model.Duracion</span>
+                    <span class="badge bg-warning text-dark font-weight-bold fs-6">⭐ @Model.Calificacion / 5.0</span>
+                    <span class="badge bg-dark border border-secondary text-light fs-6">🔞 @Model.Clasificacion</span>
+                    <span class="badge bg-dark border border-secondary text-light fs-6">⏱️ @Model.Duracion</span>
                 </div>
 
-                <h2 class="display-6 font-weight-bold my-3 text-gold">@Model.Titulo</h2>
+                <h2 class="display-6 font-weight-bold text-gold mb-3">@Model.Titulo</h2>
 
-                <h5 class="text-light mt-4">📖 Sinopsis Completa</h5>
-                <p class="text-muted leading-relaxed" style="font-size: 1.05rem;">@Model.SinopsisCompleta</p>
+                <!-- Sinopsis con alta legibilidad y texto blanco super claro -->
+                <div class="p-3 rounded-3 mb-4" style="background: rgba(0, 0, 0, 0.4); border-left: 4px solid var(--primary-gold);">
+                    <h5 class="text-gold mb-2 font-weight-bold">📖 Sinopsis Completa:</h5>
+                    <p style="color: #ffffff; font-size: 1.08rem; line-height: 1.7; margin: 0; font-weight: 400;">
+                        @Model.SinopsisCompleta
+                    </p>
+                </div>
 
-                <div class="row g-3 my-4 p-3 rounded-3" style="background: rgba(255,255,255,0.03);">
+                <div class="row g-3 mb-4 p-3 rounded-3" style="background: rgba(255,255,255,0.04);">
                     <div class="col-sm-6">
                         <span class="text-muted d-block small">Director:</span>
-                        <strong class="text-light">🎬 @Model.Director</strong>
+                        <strong class="text-light fs-6">🎬 @Model.Director</strong>
                     </div>
                     <div class="col-sm-6">
                         <span class="text-muted d-block small">Reparto Principal:</span>
-                        <strong class="text-light">🎭 @Model.Reparto</strong>
+                        <strong class="text-light fs-6">🎭 @Model.Reparto</strong>
                     </div>
                 </div>
 
-                <!-- Funciones disponibles -->
-                <h5 class="text-light mt-4 mb-3">📅 Horarios y Salas Disponibles</h5>
-                <div class="d-flex flex-wrap gap-2 mb-4">
+                <!-- Funciones disponibles (Salas simples: Sala 1, Sala 2, etc.) -->
+                <h5 class="text-light mb-3 font-weight-bold">📅 Horarios y Salas Disponibles:</h5>
+                <div class="d-flex flex-wrap gap-3 mb-4">
                     @if (funciones != null && funciones.Any())
                     {
                         foreach (var f in funciones)
                         {
-                            <div class="p-2 px-3 rounded-3 border border-secondary bg-dark text-light">
-                                <small class="text-gold d-block">@f.Sala</small>
-                                <strong>🕒 @f.Hora</strong> - <span class="text-success">Bs. @f.Precio</span>
+                            <div class="p-3 rounded-3 border border-secondary text-center" style="background: #09090e; min-width: 130px;">
+                                <span class="text-gold font-weight-bold d-block">📍 @f.Sala</span>
+                                <strong class="text-light fs-5">🕒 @f.Hora</strong>
+                                <span class="text-success d-block small font-weight-bold">Bs. @f.Precio</span>
                             </div>
                         }
                     }
-                    else
-                    {
-                        <span class="text-muted">Sin funciones programadas por hoy.</span>
-                    }
                 </div>
 
-                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@Model.Id" class="btn-glow-gold d-inline-block text-center fs-5 px-4 py-3">
-                    🎟️ Reservar Boletos para esta Película
+                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@Model.Id" class="btn-glow-gold d-inline-block text-center fs-5 px-4 py-3 w-100 w-md-auto">
+                    🎟️ Comprar Boletos para esta Película
                 </a>
             </div>
         </div>

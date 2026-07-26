@@ -6,9 +6,9 @@
 
 <section class="page-header">
     <div class="container text-center">
-        <span class="hero-badge">🎉 RESERVA EXITOSA</span>
+        <span class="hero-badge">🎉 COMPRA COMPLETADA</span>
         <h1>¡Disfruta tu Película!</h1>
-        <p>Hemos generado tu boleto digital. Preséntalo en la entrada de la sala.</p>
+        <p>Tu boleto ha sido generado con éxito. Presenta el código QR al ingresar a la sala.</p>
     </div>
 </section>
 
@@ -27,15 +27,15 @@
             <div class="ticket-body">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-8">
-                        <h2 class="ticket-movie-title">@Model.Pelicula</h2>
+                        <h2 class="ticket-movie-title text-gold">@Model.Pelicula</h2>
                         <div class="ticket-details-grid mt-3">
                             <div class="detail-item">
-                                <span class="label">Titular:</span>
-                                <span class="value">@Model.Cliente</span>
+                                <span class="label">Comprador:</span>
+                                <span class="value text-light">@Model.Cliente</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Correo:</span>
-                                <span class="value">@Model.Correo</span>
+                                <span class="value text-light">@Model.Correo</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Fecha y Hora:</span>
@@ -43,34 +43,34 @@
                             </div>
                             <div class="detail-item">
                                 <span class="label">Sala:</span>
-                                <span class="value">📍 @Model.Sala</span>
+                                <span class="value text-light">📍 @Model.Sala</span>
                             </div>
                             <div class="detail-item">
-                                <span class="label">Cantidad:</span>
-                                <span class="value">🎟️ @Model.CantidadEntradas entrada(s)</span>
+                                <span class="label">Entradas:</span>
+                                <span class="value text-light">🎟️ @Model.CantidadEntradas entrada(s)</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Asientos:</span>
-                                <span class="value text-gold">💺 @(Model.Asientos != null && Model.Asientos.Any() ? string.Join(", ", Model.Asientos) : "General / Asignado en sala")</span>
+                                <span class="value text-gold">💺 @(Model.Asientos != null && Model.Asientos.Any() ? string.Join(", ", Model.Asientos) : "General / En sala")</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Combo Snacking:</span>
-                                <span class="value">🍿 @Model.ComboNombre</span>
+                                <span class="value text-light">🍿 @Model.ComboNombre</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Total Pagado:</span>
-                                <span class="value text-success font-weight-bold fs-5">Bs. @Model.Total.ToString("F2")</span>
+                                <span class="value text-success font-weight-bold fs-4">Bs. @Model.Total.ToString("F2")</span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Código QR estilizado -->
                     <div class="col-md-4 text-center">
-                        <div class="barcode-wrapper p-3">
-                            <div class="barcode-lines">
-                                ||||||| | ||||| || |||||||| | |||||| ||||
-                            </div>
-                            <span class="barcode-num">@Model.CodigoReserva</span>
+                        <div class="qr-wrapper p-3 rounded-4 bg-white d-inline-block shadow-lg">
+                            <img src="~/images/qr_code.svg" alt="Código QR" style="width: 140px; height: 140px;" />
+                            <div class="text-dark font-weight-bold small mt-2">@Model.CodigoReserva</div>
                         </div>
-                        <p class="text-muted small mt-2">Muestra este código QR/Barras al ingresar</p>
+                        <p class="text-muted small mt-2">Muestra este QR al ingresar a la sala</p>
                     </div>
                 </div>
             </div>

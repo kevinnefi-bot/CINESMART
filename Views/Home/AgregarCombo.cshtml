@@ -1,0 +1,116 @@
+@{
+    ViewData["Title"] = "Paso 2: Combos & Snacks";
+    var cliente = ViewBag.Cliente as string;
+    var correo = ViewBag.Correo as string;
+    var funcion = ViewBag.Funcion as CINESMART.Models.Funcion;
+    var pelicula = ViewBag.Pelicula as CINESMART.Models.Pelicula;
+    var cantidadEntradas = (int)(ViewBag.CantidadEntradas ?? 1);
+    var asientosSeleccionados = ViewBag.AsientosSeleccionados as string;
+    var subtotal = (decimal)(ViewBag.Subtotal ?? 0);
+    var combos = ViewBag.Combos as List<CINESMART.Models.Combo>;
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🍿 PASO 2 DE 2</span>
+        <h1>¿Deseas agregar un combo de comida?</h1>
+        <p>Acompaña tus entradas para <strong>@pelicula?.Titulo</strong> con nuestros combos de palomitas y gaseosas.</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <form asp-controller="Home" asp-action="ConfirmarCompra" method="post" id="comboForm">
+        <!-- Campos ocultos con la información del Paso 1 -->
+        <input type="hidden" name="cliente" value="@cliente" />
+        <input type="hidden" name="correo" value="@correo" />
+        <input type="hidden" name="funcionId" value="@funcion?.Id" />
+        <input type="hidden" name="cantidadEntradas" value="@cantidadEntradas" />
+        <input type="hidden" name="asientosSeleccionados" value="@asientosSeleccionados" />
+
+        <div class="row g-4 justify-content-center mb-5">
+            <!-- Opción: Sin Combo -->
+            <div class="col-md-3 col-sm-6">
+                <label class="combo-select-card h-100 p-4 text-center rounded-4 border border-secondary d-flex flex-column justify-content-between cursor-pointer" style="background: #12121c;">
+                    <div>
+                        <input type="radio" name="comboId" value="" data-precio="0" checked class="form-check-input mb-3" style="width: 22px; height: 22px;" />
+                        <div class="fs-1 mb-2">🚫</div>
+                        <h4 class="text-light">Sin Combo</h4>
+                        <p class="text-muted small">Solo comprar las entradas de cine.</p>
+                    </div>
+                    <div class="text-gold font-weight-bold fs-5">Bs. 0.00</div>
+                </label>
+            </div>
+
+            <!-- Opciones de Combos -->
+            @if (combos != null)
+            {
+                foreach (var c in combos)
+                {
+                    <div class="col-md-3 col-sm-6">
+                        <label class="combo-select-card h-100 p-4 text-center rounded-4 border border-warning border-opacity-50 d-flex flex-column justify-content-between cursor-pointer" style="background: #12121c;">
+                            <div>
+                                <input type="radio" name="comboId" value="@c.Id" data-precio="@c.Precio" class="form-check-input mb-3" style="width: 22px; height: 22px;" />
+                                <div class="fs-1 mb-2">
+                                    @if (c.Nombre.Contains("Individual")) { <span>🍿🥤</span> }
+                                    else if (c.Nombre.Contains("Dos")) { <span>🍿🍿🥤🥤</span> }
+                                    else { <span>🍿🍿🥤🧀</span> }
+                                </div>
+                                <h4 class="text-gold">@c.Nombre</h4>
+                                <p class="text-muted small">@c.Descripcion</p>
+                            </div>
+                            <div class="text-success font-weight-bold fs-5">+ Bs. @c.Precio.ToString("F2")</div>
+                        </label>
+                    </div>
+                }
+            }
+        </div>
+
+        <!-- Resumen Total y Confirmación -->
+        <div class="p-4 rounded-4 border border-warning border-opacity-25" style="background: #151522; max-width: 700px; margin: 0 auto;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Subtotal Entradas (@cantidadEntradas boleto(s)):</span>
+                <strong class="text-light fs-5">Bs. @subtotal.ToString("F2")</strong>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Combo Seleccionado:</span>
+                <strong class="text-gold fs-5" id="comboSelectedText">Sin Combo (Bs. 0.00)</strong>
+            </div>
+            <hr class="border-secondary" />
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="text-light font-weight-bold fs-5">TOTAL FINAL:</span>
+                <h2 class="text-success font-weight-bold mb-0" id="finalTotalText">Bs. @subtotal.ToString("F2")</h2>
+            </div>
+            <button type="submit" class="btn-glow-gold w-100 py-3 fs-5 font-weight-bold">
+                🎟️ Finalizar Reserva & Emitir Boleto
+            </button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const subtotal = @subtotal;
+            const comboRadios = document.querySelectorAll('input[name="comboId"]');
+            const comboSelectedText = document.getElementById("comboSelectedText");
+            const finalTotalText = document.getElementById("finalTotalText");
+
+            comboRadios.forEach(radio => {
+                radio.addEventListener("change", function() {
+                    const precioCombo = parseFloat(this.getAttribute("data-precio") || 0);
+                    const totalFinal = subtotal + precioCombo;
+                    
+                    if (precioCombo === 0) {
+                        comboSelectedText.textContent = "Sin Combo (Bs. 0.00)";
+                    } else {
+                        const parentCard = this.closest("label");
+                        const nombreCombo = parentCard.querySelector("h4").textContent;
+                        comboSelectedText.textContent = nombreCombo + " (+Bs. " + precioCombo.toFixed(2) + ")";
+                    }
+                    
+                    finalTotalText.textContent = "Bs. " + totalFinal.toFixed(2);
+                });
+            });
+        });
+    </script>
+}

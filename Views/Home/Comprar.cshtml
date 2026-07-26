@@ -1,36 +1,31 @@
 @model CINESMART.Models.Pelicula
 
 @{
-    ViewData["Title"] = "Comprar Entradas - " + Model.Titulo;
+    ViewData["Title"] = "Paso 1: Entradas - " + Model.Titulo;
     var funciones = ViewBag.Funciones as List<CINESMART.Models.Funcion>;
-    var combos = ViewBag.Combos as List<CINESMART.Models.Combo>;
     string[] filas = new string[] { "A", "B", "C", "D" };
 }
 
 <section class="page-header">
     <div class="container text-center">
-        <span class="hero-badge">🎟️ RESERVA TU LUGAR</span>
-        <h1>Comprar Entradas</h1>
-        <p>Elige tu función, selecciona tus asientos e incluye tus combos favoritos.</p>
+        <span class="hero-badge">🎟️ PASO 1 DE 2</span>
+        <h1>Selección de Boletos & Asientos</h1>
+        <p>Elige tu función, cantidad de entradas y tus asientos en sala.</p>
     </div>
 </section>
 
 <section class="container py-5">
     <div class="row g-5">
-        <!-- Detalles de la Película -->
+        <!-- Resumen de la Película -->
         <div class="col-lg-4">
             <div class="movie-summary-card">
                 <div class="poster-preview">
-                    @if (Model.Titulo.Contains("Avatar")) { <span>🌊</span> }
-                    else if (Model.Titulo.Contains("Spider")) { <span>🕷️</span> }
-                    else if (Model.Titulo.Contains("Inside")) { <span>🧠</span> }
-                    else if (Model.Titulo.Contains("Interestelar")) { <span>🚀</span> }
-                    else { <span>🦖</span> }
+                    <img src="@Model.Imagen" alt="@Model.Titulo" class="img-fluid w-100 h-100" style="object-fit: cover;" />
                 </div>
                 <div class="summary-body">
                     <span class="genre-tag">@Model.Genero</span>
                     <h2>@Model.Titulo</h2>
-                    <p>@Model.Descripcion</p>
+                    <p class="text-muted">@Model.Descripcion</p>
                     <div class="details-badges mt-3">
                         <span class="badge-pill">⏱️ @Model.Duracion</span>
                         <span class="badge-pill">🔞 @Model.Clasificacion</span>
@@ -39,15 +34,15 @@
             </div>
         </div>
 
-        <!-- Formulario de Compra con Asientos y Combos -->
+        <!-- Formulario Paso 1: Entradas + Asientos + Datos -->
         <div class="col-lg-8">
-            <form asp-controller="Home" asp-action="ConfirmarCompra" method="post" id="purchaseForm" class="purchase-form-card">
+            <form asp-controller="Home" asp-action="AgregarCombo" method="post" id="purchaseForm" class="purchase-form-card">
                 
                 <!-- 1. Selección de Función -->
                 <div class="form-step mb-4">
-                    <h3 class="step-title">1. Selecciona la Función</h3>
+                    <h3 class="step-title">1. Selecciona la Función y Hora</h3>
                     <div class="form-group">
-                        <label for="funcionId" class="form-label">Horario y Sala disponible:</label>
+                        <label for="funcionId" class="form-label text-light">Horarios en sala:</label>
                         <select id="funcionId" name="funcionId" class="form-select custom-input" required>
                             <option value="" data-precio="0">-- Seleccionar función --</option>
                             @if (funciones != null)
@@ -55,7 +50,7 @@
                                 foreach (var f in funciones)
                                 {
                                     <option value="@f.Id" data-precio="@f.Precio">
-                                        📅 @f.Fecha - 🕒 @f.Hora - 📍 @f.Sala (Bs. @f.Precio)
+                                        📅 @f.Fecha - 🕒 @f.Hora - 📍 @f.Sala (Bs. @f.Precio por boleto)
                                     </option>
                                 }
                             }
@@ -65,9 +60,9 @@
 
                 <!-- 2. Selección de Cantidad -->
                 <div class="form-step mb-4">
-                    <h3 class="step-title">2. Cantidad de Entradas</h3>
+                    <h3 class="step-title">2. Cantidad de Boletos</h3>
                     <div class="form-group">
-                        <label for="cantidadEntradas" class="form-label">Número de boletos:</label>
+                        <label for="cantidadEntradas" class="form-label text-light">Número de entradas:</label>
                         <select id="cantidadEntradas" name="cantidadEntradas" class="form-select custom-input" required>
                             <option value="1">1 Entrada</option>
                             <option value="2">2 Entradas</option>
@@ -78,9 +73,9 @@
                     </div>
                 </div>
 
-                <!-- 3. Mapa Visual de Asientos -->
+                <!-- 3. Mapa de Asientos -->
                 <div class="form-step mb-4">
-                    <h3 class="step-title">3. Selecciona tus Asientos en Sala</h3>
+                    <h3 class="step-title">3. Selecciona tus Asientos</h3>
                     <div class="cinema-screen-wrapper text-center my-3">
                         <div class="cinema-screen">PANTALLA PROYECTORA 🍿</div>
                     </div>
@@ -96,7 +91,7 @@
                             @foreach (var fila in filas)
                             {
                                 <div class="seat-row d-flex justify-content-center gap-2 mb-2">
-                                    <span class="row-label">@fila</span>
+                                    <span class="row-label text-light">@fila</span>
                                     @for (int col = 1; col <= 6; col++)
                                     {
                                         string seatId = $"{fila}{col}";
@@ -113,53 +108,34 @@
                         </div>
                         <input type="hidden" id="asientosSeleccionados" name="asientosSeleccionados" value="" />
                         <div class="selected-seats-info mt-2">
-                            <span>Asientos seleccionados: <strong id="seatsText" class="text-gold">Ninguno</strong></span>
+                            <span class="text-light">Asientos seleccionados: <strong id="seatsText" class="text-gold">Ninguno</strong></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. Combos de Dulcería -->
+                <!-- 4. Datos del Comprador -->
                 <div class="form-step mb-4">
-                    <h3 class="step-title">4. Combos & Snacks (Opcional)</h3>
-                    <div class="form-group">
-                        <select id="comboId" name="comboId" class="form-select custom-input">
-                            <option value="" data-precio="0">🍿 Sin combo de dulcería</option>
-                            @if (combos != null)
-                            {
-                                foreach (var c in combos)
-                                {
-                                    <option value="@c.Id" data-precio="@c.Precio">
-                                        🍿 @c.Nombre - @c.Descripcion (+Bs. @c.Precio)
-                                    </option>
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-
-                <!-- 5. Datos Personales -->
-                <div class="form-step mb-4">
-                    <h3 class="step-title">5. Tus Datos para el Envío del Boleto</h3>
+                    <h3 class="step-title">4. Tus Datos de Comprador</h3>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label for="cliente" class="form-label">Nombre Completo:</label>
+                            <label for="cliente" class="form-label text-light">Nombre Completo:</label>
                             <input type="text" id="cliente" name="cliente" class="form-control custom-input" placeholder="Ej. Kevin Balcazar" required />
                         </div>
                         <div class="col-md-6">
-                            <label for="correo" class="form-label">Correo Electrónico:</label>
+                            <label for="correo" class="form-label text-light">Correo Electrónico:</label>
                             <input type="email" id="correo" name="correo" class="form-control custom-input" placeholder="ejemplo@correo.com" required />
                         </div>
                     </div>
                 </div>
 
-                <!-- Resumen de Costo -->
+                <!-- Resumen y Botón al Paso 2 -->
                 <div class="total-summary-box d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <span class="total-label">Total a pagar:</span>
+                        <span class="total-label text-muted">Subtotal de entradas:</span>
                         <h2 class="total-amount mb-0" id="totalAmountText">Bs. 0.00</h2>
                     </div>
                     <button type="submit" class="btn-confirm-purchase">
-                        🎟️ Confirmar Reserva & Comprar
+                        🍿 Continuar a Combos de Dulcería &rarr;
                     </button>
                 </div>
             </form>
@@ -172,7 +148,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             const funcionSelect = document.getElementById("funcionId");
             const cantidadSelect = document.getElementById("cantidadEntradas");
-            const comboSelect = document.getElementById("comboId");
             const totalText = document.getElementById("totalAmountText");
             const seatBtns = document.querySelectorAll(".seat-btn.available");
             const seatsInput = document.getElementById("asientosSeleccionados");
@@ -184,11 +159,7 @@
                 const funcionOption = funcionSelect.options[funcionSelect.selectedIndex];
                 const precioFuncion = parseFloat(funcionOption.getAttribute("data-precio") || 0);
                 const cantidad = parseInt(cantidadSelect.value || 1);
-
-                const comboOption = comboSelect.options[comboSelect.selectedIndex];
-                const precioCombo = parseFloat(comboOption.getAttribute("data-precio") || 0);
-
-                const total = (precioFuncion * cantidad) + precioCombo;
+                const total = (precioFuncion * cantidad);
                 totalText.textContent = "Bs. " + total.toFixed(2);
             }
 
@@ -223,7 +194,6 @@
                 seatsInput.value = "";
                 seatsText.textContent = "Ninguno";
             });
-            comboSelect.addEventListener("change", updateTotal);
 
             updateTotal();
         });
