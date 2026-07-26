@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ioBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="33%" stop-color="#ec4899" />
+      <stop offset="66%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="#181824" />
+  <!-- Emotion orbs -->
+  <circle cx="140" cy="180" r="45" fill="#f59e0b" opacity="0.9" />
+  <circle cx="240" cy="160" r="50" fill="#3b82f6" opacity="0.9" />
+  <circle cx="200" cy="240" r="40" fill="#ec4899" opacity="0.9" />
+  <circle cx="270" cy="250" r="35" fill="#10b981" opacity="0.9" />
+  <!-- Poster Title -->
+  <text x="200" y="440" font-family="'Outfit', sans-serif" font-weight="900" font-size="28" fill="#ffffff" text-anchor="middle" letter-spacing="2">INSIDE OUT 2</text>
+  <text x="200" y="470" font-family="'Outfit', sans-serif" font-weight="600" font-size="14" fill="#fbbf24" text-anchor="middle" letter-spacing="2">INTENSA-MENTE 2</text>
+  <rect x="140" y="500" width="120" height="26" rx="13" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="1"/>
+  <text x="200" y="517" font-family="'Outfit', sans-serif" font-weight="700" font-size="12" fill="#fef3c7" text-anchor="middle">ANIMACIÓN / DISNEY</text>
+</svg>

@@ -74,8 +74,8 @@ main {
 .cinema-navbar .nav-link {
     color: #cbd5e1 !important;
     font-weight: 500;
-    font-size: 1rem;
-    padding: 0.5rem 1rem !important;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.8rem !important;
     transition: all 0.2s ease;
     border-radius: 8px;
 }
@@ -89,7 +89,6 @@ main {
     background: var(--primary-gold);
     color: #000 !important;
     font-weight: 700 !important;
-    margin-left: 0.5rem;
 }
 
 .nav-btn-buy:hover {
@@ -103,7 +102,7 @@ main {
    ========================================================= */
 .hero-banner {
     position: relative;
-    padding: 6rem 1rem;
+    padding: 5rem 1rem;
     background: linear-gradient(180deg, rgba(20, 15, 35, 0.8) 0%, rgba(9, 9, 14, 1) 100%);
     border-bottom: 1px solid var(--border-color);
     overflow: hidden;
@@ -123,7 +122,7 @@ main {
 }
 
 .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-size: clamp(2.3rem, 5vw, 4rem);
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: 1.2rem;
@@ -152,11 +151,12 @@ main {
     background: var(--primary-gold);
     color: #0d0d12;
     font-weight: 700;
-    padding: 0.85rem 2rem;
+    padding: 0.85rem 1.8rem;
     border-radius: 12px;
     text-decoration: none;
     transition: all 0.25s ease;
     box-shadow: 0 4px 20px var(--gold-glow);
+    border: none;
 }
 
 .btn-glow-gold:hover {
@@ -170,7 +170,7 @@ main {
     background: rgba(255, 255, 255, 0.06);
     color: var(--text-main);
     font-weight: 600;
-    padding: 0.85rem 2rem;
+    padding: 0.85rem 1.8rem;
     border-radius: 12px;
     border: 1px solid var(--border-color);
     text-decoration: none;
@@ -184,7 +184,7 @@ main {
 }
 
 /* =========================================================
-   MOVIE CARDS & GRID
+   MOVIE CARDS & IMAGES
    ========================================================= */
 .section-title {
     font-size: 2rem;
@@ -207,11 +207,6 @@ main {
     transition: all 0.2s;
 }
 
-.view-all-link:hover {
-    color: #fbbf24;
-    text-decoration: underline;
-}
-
 .movie-card-modern {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -230,17 +225,21 @@ main {
 }
 
 .poster-wrapper {
-    height: 240px;
-    background: linear-gradient(135deg, #1e1b4b, #0f172a);
+    height: 320px;
+    background: #000;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 }
 
-.poster-placeholder {
-    font-size: 5rem;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+.movie-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.movie-card-modern:hover .movie-poster-img {
+    transform: scale(1.05);
 }
 
 .badge-rating, .badge-duration, .badge-format {
@@ -254,7 +253,7 @@ main {
     border: 1px solid var(--border-color);
 }
 
-.badge-rating { top: 12px; left: 12px; }
+.badge-rating { top: 12px; left: 12px; color: var(--primary-gold); }
 .badge-duration { top: 12px; right: 12px; }
 .badge-format { bottom: 12px; right: 12px; color: var(--primary-gold); border-color: rgba(245, 158, 11, 0.3); }
 
@@ -287,23 +286,35 @@ main {
     flex: 1;
 }
 
-.btn-card-buy {
-    display: block;
-    text-align: center;
+.btn-card-details {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-color);
-    color: var(--text-main);
-    padding: 0.75rem;
+    color: #fff;
+    padding: 0.65rem;
     border-radius: 10px;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s ease;
 }
 
-.movie-card-modern:hover .btn-card-buy {
+.btn-card-details:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.btn-card-buy {
     background: var(--primary-gold);
     color: #000;
-    border-color: var(--primary-gold);
+    padding: 0.65rem;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-card-buy:hover {
+    background: #fbbf24;
+    color: #000;
 }
 
 /* Horizontal Movie Cards (Cartelera) */
@@ -322,17 +333,17 @@ main {
 }
 
 .poster-box {
-    width: 180px;
-    min-width: 180px;
-    background: linear-gradient(135deg, #311b92, #0d47a1);
+    width: 190px;
+    min-width: 190px;
+    background: #000;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 }
 
-.poster-emoji {
-    font-size: 4rem;
+.movie-poster-horizontal {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .movie-detail-box {
@@ -360,7 +371,6 @@ main {
 .btn-primary-action:hover {
     background: #fbbf24;
     color: #000;
-    transform: translateY(-2px);
 }
 
 /* Genre Filter Chips */
@@ -390,83 +400,6 @@ main {
 }
 
 /* =========================================================
-   FEATURES & COMBOS
-   ========================================================= */
-.feature-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 2rem;
-    border-radius: 20px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.feature-box:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-5px);
-}
-
-.feature-icon-wrapper {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.combo-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.combo-card:hover {
-    border-color: var(--primary-gold);
-    transform: translateY(-5px);
-}
-
-.combo-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
-
-.combo-title {
-    font-size: 1.4rem;
-    font-weight: 800;
-}
-
-.combo-desc {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    min-height: 48px;
-}
-
-.combo-price-tag {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--primary-gold);
-    margin: 1rem 0;
-}
-
-.btn-combo-add {
-    display: inline-block;
-    width: 100%;
-    background: rgba(245, 158, 11, 0.15);
-    border: 1px solid var(--primary-gold);
-    color: var(--primary-gold);
-    padding: 0.75rem;
-    border-radius: 10px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-
-.btn-combo-add:hover {
-    background: var(--primary-gold);
-    color: #000;
-}
-
-/* =========================================================
    COMPRA FORM & SEAT MATRIX
    ========================================================= */
 .movie-summary-card {
@@ -474,16 +407,6 @@ main {
     border: 1px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
-    sticky: top;
-}
-
-.poster-preview {
-    height: 200px;
-    background: linear-gradient(135deg, #311b92, #1a237e);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
 }
 
 .summary-body {
@@ -529,10 +452,6 @@ main {
 }
 
 /* Seats UI */
-.cinema-screen-wrapper {
-    perspective: 400px;
-}
-
 .cinema-screen {
     background: linear-gradient(90deg, transparent 0%, #38bdf8 50%, transparent 100%);
     height: 12px;
@@ -558,10 +477,6 @@ main {
 .seat-sample.selected { background: var(--primary-gold); }
 .seat-sample.occupied { background: #ef4444; }
 
-.seat-row {
-    align-items: center;
-}
-
 .row-label {
     width: 25px;
     font-weight: 700;
@@ -579,29 +494,10 @@ main {
     transition: all 0.2s ease;
 }
 
-.seat-btn.available {
-    background: #1e293b;
-    color: #94a3b8;
-}
-
-.seat-btn.available:hover {
-    background: #334155;
-    color: #fff;
-    transform: scale(1.1);
-}
-
-.seat-btn.selected {
-    background: var(--primary-gold) !important;
-    color: #000 !important;
-    box-shadow: 0 0 10px var(--gold-glow);
-}
-
-.seat-btn.occupied {
-    background: #475569 !important;
-    color: #64748b !important;
-    cursor: not-allowed;
-    opacity: 0.5;
-}
+.seat-btn.available { background: #1e293b; color: #94a3b8; }
+.seat-btn.available:hover { background: #334155; color: #fff; transform: scale(1.1); }
+.seat-btn.selected { background: var(--primary-gold) !important; color: #000 !important; box-shadow: 0 0 10px var(--gold-glow); }
+.seat-btn.occupied { background: #475569 !important; color: #64748b !important; cursor: not-allowed; opacity: 0.5; }
 
 .total-summary-box {
     background: rgba(245, 158, 11, 0.08);
@@ -610,15 +506,8 @@ main {
     padding: 1.5rem;
 }
 
-.total-label {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-.total-amount {
-    color: var(--primary-gold);
-    font-weight: 900;
-}
+.total-label { color: var(--text-muted); font-size: 0.9rem; }
+.total-amount { color: var(--primary-gold); font-weight: 900; }
 
 .btn-confirm-purchase {
     background: var(--primary-gold);
@@ -638,165 +527,39 @@ main {
     box-shadow: 0 6px 20px var(--gold-glow);
 }
 
-/* =========================================================
-   TICKET RECEIPT (CONFIRMACION)
-   ========================================================= */
-.ticket-card-container {
-    max-width: 750px;
-    margin: 0 auto;
-}
-
+/* Ticket Receipt */
+.ticket-card-container { max-width: 750px; margin: 0 auto; }
 .ticket-card {
     background: #141420;
     border: 1px solid var(--border-color);
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    position: relative;
 }
+.ticket-header { background: linear-gradient(90deg, #1e1b4b, #311b92); padding: 1.25rem 2rem; border-bottom: 2px dashed rgba(255, 255, 255, 0.15); }
+.ticket-brand { font-weight: 900; letter-spacing: 1px; color: var(--primary-gold); }
+.ticket-code { font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.4); padding: 0.3rem 0.8rem; border-radius: 6px; color: #38bdf8; }
+.ticket-body { padding: 2rem; }
+.ticket-movie-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem; }
+.ticket-details-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.detail-item .label { display: block; color: var(--text-muted); font-size: 0.85rem; }
+.detail-item .value { font-weight: 700; font-size: 1rem; }
+.ticket-footer { background: rgba(255, 255, 255, 0.02); padding: 1.25rem 2rem; border-top: 1px solid var(--border-color); }
+.btn-print { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-color); color: #fff; padding: 0.7rem 1.2rem; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
-.ticket-header {
-    background: linear-gradient(90deg, #1e1b4b, #311b92);
-    padding: 1.25rem 2rem;
-    border-bottom: 2px dashed rgba(255, 255, 255, 0.15);
-}
-
-.ticket-brand {
-    font-weight: 900;
-    letter-spacing: 1px;
-    color: var(--primary-gold);
-}
-
-.ticket-code {
-    font-family: monospace;
-    font-size: 1.1rem;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 0.3rem 0.8rem;
-    border-radius: 6px;
-    color: #38bdf8;
-}
-
-.ticket-body {
-    padding: 2rem;
-}
-
-.ticket-movie-title {
-    font-size: 1.8rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
-}
-
-.ticket-details-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.detail-item .label {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
-.detail-item .value {
-    font-weight: 700;
-    font-size: 1rem;
-}
-
-.barcode-wrapper {
-    background: #fff;
-    border-radius: 12px;
-    color: #000;
-}
-
-.barcode-lines {
-    font-family: monospace;
-    font-weight: 900;
-    letter-spacing: 3px;
-    font-size: 1.2rem;
-    user-select: none;
-}
-
-.barcode-num {
-    font-size: 0.75rem;
-    font-family: monospace;
-}
-
-.ticket-footer {
-    background: rgba(255, 255, 255, 0.02);
-    padding: 1.25rem 2rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.btn-print {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    padding: 0.7rem 1.2rem;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-print:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.btn-back {
-    background: var(--primary-gold);
-    color: #000;
-    padding: 0.7rem 1.2rem;
-    border-radius: 10px;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.cinema-footer {
-    background: #06060a;
-    border-top: 1px solid var(--border-color);
-    padding: 3rem 0;
-    margin-top: 4rem;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 2rem;
-}
-
+/* Footer */
+.cinema-footer { background: #06060a; border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 4rem; }
+.footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
 .cinema-footer h3 span { color: var(--primary-gold); }
-
-.footer-links ul {
-    list-style: none;
-    padding: 0;
-}
-
+.footer-links ul { list-style: none; padding: 0; }
 .footer-links li { margin-bottom: 0.5rem; }
+.footer-links a { color: var(--text-muted); text-decoration: none; }
+.footer-links a:hover { color: var(--primary-gold); }
+.footer-copy { color: var(--text-muted); font-size: 0.85rem; }
 
-.footer-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.footer-links a:hover {
-    color: var(--primary-gold);
-}
-
-.footer-copy {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
-/* Media Queries */
 @media (max-width: 768px) {
     .movie-horizontal-card { flex-direction: column; }
-    .poster-box { width: 100%; min-width: 100%; height: 160px; }
+    .poster-box { width: 100%; min-width: 100%; height: 220px; }
     .footer-content { grid-template-columns: 1fr; }
     .ticket-details-grid { grid-template-columns: 1fr; }
-    .total-summary-box { flex-direction: column; gap: 1rem; text-align: center; }
 }

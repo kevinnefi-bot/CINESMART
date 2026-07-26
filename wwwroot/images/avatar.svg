@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#030712" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg)" />
+  <circle cx="200" cy="220" r="140" fill="url(#glow)" />
+  <!-- Bioluminescent elements -->
+  <path d="M 80 300 Q 200 150 320 300" stroke="#0ea5e9" stroke-width="4" fill="none" opacity="0.7"/>
+  <circle cx="120" cy="180" r="3" fill="#7dd3fc" />
+  <circle cx="280" cy="240" r="4" fill="#38bdf8" />
+  <circle cx="200" cy="140" r="5" fill="#e0f2fe" />
+  <!-- Poster Title -->
+  <text x="200" y="440" font-family="'Outfit', sans-serif" font-weight="900" font-size="28" fill="#ffffff" text-anchor="middle" letter-spacing="2">AVATAR</text>
+  <text x="200" y="470" font-family="'Outfit', sans-serif" font-weight="600" font-size="14" fill="#38bdf8" text-anchor="middle" letter-spacing="3">EL CAMINO DEL AGUA</text>
+  <rect x="140" y="500" width="120" height="26" rx="13" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="1"/>
+  <text x="200" y="517" font-family="'Outfit', sans-serif" font-weight="700" font-size="12" fill="#e0f2fe" text-anchor="middle">CINEMA 3D IMAX</text>
+</svg>

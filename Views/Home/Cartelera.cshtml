@@ -1,7 +1,7 @@
 @model List<CINESMART.Models.Pelicula>
 
 @{
-    ViewData["Title"] = "Cartelera";
+    ViewData["Title"] = "Cartelera Completa";
     var generoSel = ViewBag.GeneroSeleccionado as string ?? "Todos";
 }
 
@@ -37,14 +37,8 @@
                 <div class="col-lg-6">
                     <div class="movie-horizontal-card">
                         <div class="poster-box">
-                            <div class="poster-emoji">
-                                @if (pelicula.Titulo.Contains("Avatar")) { <span>🌊</span> }
-                                else if (pelicula.Titulo.Contains("Spider")) { <span>🕷️</span> }
-                                else if (pelicula.Titulo.Contains("Inside")) { <span>🧠</span> }
-                                else if (pelicula.Titulo.Contains("Interestelar")) { <span>🚀</span> }
-                                else { <span>🦖</span> }
-                            </div>
-                            <span class="badge-format">IMAX 3D</span>
+                            <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-horizontal" />
+                            <span class="badge-format">⭐ @pelicula.Calificacion</span>
                         </div>
                         <div class="movie-detail-box">
                             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -56,9 +50,14 @@
                             <div class="meta-info mb-3">
                                 <span>⏱️ <strong>Duración:</strong> @pelicula.Duracion</span>
                             </div>
-                            <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-primary-action">
-                                🎟️ Ver Funciones & Entradas
-                            </a>
+                            <div class="d-flex gap-2">
+                                <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn-glass py-2 px-3 fs-6">
+                                    ℹ️ Ver Sinopsis
+                                </a>
+                                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-primary-action flex-grow-1 text-center">
+                                    🎟️ Comprar Entradas
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

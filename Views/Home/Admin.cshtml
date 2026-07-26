@@ -1,0 +1,86 @@
+@model List<CINESMART.Models.Compra>
+
+@{
+    ViewData["Title"] = "Panel Administrador";
+    decimal totalRecaudado = ViewBag.TotalRecaudado ?? 0;
+    int totalBoletos = ViewBag.TotalBoletos ?? 0;
+    int totalReservas = ViewBag.TotalReservas ?? 0;
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">📊 SUBPROGRAMA DE ADMINISTRACIÓN</span>
+        <h1>Panel de Ventas & Reservas</h1>
+        <p>Módulo interno para supervisar ingresos, boletos vendidos y compras registradas.</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <!-- Tarjetas de Estadísticas -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="p-4 rounded-4 text-center border border-success" style="background: rgba(16, 185, 129, 0.1);">
+                <span class="fs-1">💰</span>
+                <span class="text-muted d-block mt-2">Total Recaudado</span>
+                <h2 class="text-success font-weight-bold mb-0">Bs. @totalRecaudado.ToString("F2")</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 rounded-4 text-center border border-warning" style="background: rgba(245, 158, 11, 0.1);">
+                <span class="fs-1">🎟️</span>
+                <span class="text-muted d-block mt-2">Boletos Vendidos</span>
+                <h2 class="text-gold font-weight-bold mb-0">@totalBoletos boletos</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 rounded-4 text-center border border-info" style="background: rgba(56, 189, 248, 0.1);">
+                <span class="fs-1">📋</span>
+                <span class="text-muted d-block mt-2">Total Transacciones</span>
+                <h2 class="text-info font-weight-bold mb-0">@totalReservas compras</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de Ventas -->
+    <div class="p-4 rounded-4 border border-secondary" style="background: var(--bg-card);">
+        <h3 class="mb-4 text-light">📜 Historial de Boletos Emitidos</h3>
+        @if (Model == null || !Model.Any())
+        {
+            <p class="text-muted">Aún no hay compras registradas en el sistema.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                    <thead>
+                        <tr class="table-secondary text-dark">
+                            <th>Código</th>
+                            <th>Cliente</th>
+                            <th>Correo</th>
+                            <th>Película</th>
+                            <th>Función</th>
+                            <th>Asientos</th>
+                            <th>Combo</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model)
+                        {
+                            <tr>
+                                <td><code class="text-gold">@r.CodigoReserva</code></td>
+                                <td><strong>@r.Cliente</strong></td>
+                                <td class="text-muted">@r.Correo</td>
+                                <td>@r.Pelicula</td>
+                                <td>@r.Fecha - @r.Hora (@r.Sala)</td>
+                                <td><span class="badge bg-secondary">@(r.Asientos != null && r.Asientos.Any() ? string.Join(", ", r.Asientos) : "General")</span></td>
+                                <td><small class="text-info">@r.ComboNombre</small></td>
+                                <td class="text-success font-weight-bold">Bs. @r.Total.ToString("F2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</section>

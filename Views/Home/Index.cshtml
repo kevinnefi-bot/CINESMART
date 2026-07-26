@@ -16,14 +16,14 @@
             <a asp-controller="Home" asp-action="Cartelera" class="btn-glow-gold">
                 🎬 Ver Cartelera Completa
             </a>
-            <a asp-controller="Home" asp-action="Combos" class="btn-glass">
-                🍿 Ver Combos
+            <a asp-controller="Home" asp-action="BuscarReserva" class="btn-glass">
+                🔍 Consultar mi Reserva
             </a>
         </div>
     </div>
 </section>
 
-<!-- Películas Destacadas -->
+<!-- Películas Destacadas con Imágenes Reales -->
 <section class="featured-section container py-5">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -41,23 +41,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="movie-card-modern">
                         <div class="poster-wrapper">
-                            <div class="poster-placeholder">
-                                @if (pelicula.Titulo.Contains("Avatar")) { <span>🌊</span> }
-                                else if (pelicula.Titulo.Contains("Spider")) { <span>🕷️</span> }
-                                else if (pelicula.Titulo.Contains("Inside")) { <span>🧠</span> }
-                                else if (pelicula.Titulo.Contains("Interestelar")) { <span>🚀</span> }
-                                else { <span>🦖</span> }
-                            </div>
-                            <span class="badge-rating">🔞 @pelicula.Clasificacion</span>
+                            <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-img" />
+                            <span class="badge-rating">⭐ @pelicula.Calificacion</span>
                             <span class="badge-duration">⏱️ @pelicula.Duracion</span>
                         </div>
                         <div class="movie-card-body">
                             <span class="genre-tag">@pelicula.Genero</span>
                             <h3 class="movie-card-title">@pelicula.Titulo</h3>
                             <p class="movie-card-desc">@pelicula.Descripcion</p>
-                            <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-card-buy">
-                                🎟️ Comprar Entradas
-                            </a>
+                            <div class="d-flex gap-2">
+                                <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn-card-details flex-grow-1 text-center">
+                                    ℹ️ Ver Detalle
+                                </a>
+                                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-card-buy flex-grow-1 text-center">
+                                    🎟️ Comprar
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +91,7 @@
                 <div class="feature-box">
                     <div class="feature-icon-wrapper">🥤</div>
                     <h4>Combos Exclusivos</h4>
-                    <p>Acompaña tu función con palomitas recién hechas, nachos y bebidas de gran tamaño.</p>
+                    <p>Acompaña tu película con nuestros deliciosos combos de dulcería.</p>
                 </div>
             </div>
         </div>

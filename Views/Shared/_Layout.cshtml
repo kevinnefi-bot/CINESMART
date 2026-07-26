@@ -21,11 +21,11 @@
                 <a class="navbar-brand cinema-logo" asp-controller="Home" asp-action="Index">
                     <span class="logo-icon">🎬</span> <span class="logo-text">CINE<span class="highlight">SMART</span></span>
                 </a>
-                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mainNavigation">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">🏠 Inicio</a>
                         </li>
@@ -36,6 +36,12 @@
                             <a class="nav-link" asp-controller="Home" asp-action="Combos">🍿 Combos</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="BuscarReserva">🔍 Consultar Reserva</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Admin">📊 Panel Admin</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
                             <a class="nav-link nav-btn-buy" asp-controller="Home" asp-action="Comprar">🎟️ Comprar entradas</a>
                         </li>
                     </ul>
@@ -56,16 +62,17 @@
                     <p>La mejor experiencia cinematográfica al alcance de un clic.</p>
                 </div>
                 <div class="footer-links">
-                    <h5>Navegación</h5>
+                    <h5>Subprogramas</h5>
                     <ul>
                         <li><a asp-controller="Home" asp-action="Cartelera">Películas en Cartelera</a></li>
                         <li><a asp-controller="Home" asp-action="Combos">Combos & Dulcería</a></li>
-                        <li><a asp-controller="Home" asp-action="Comprar">Comprar Boletos</a></li>
+                        <li><a asp-controller="Home" asp-action="BuscarReserva">Consultar mi Reserva</a></li>
+                        <li><a asp-controller="Home" asp-action="Admin">Panel Administrativo</a></li>
                     </ul>
                 </div>
                 <div class="footer-copy">
                     <p>© 2026 CINESMART Inc.</p>
-                    <p>Todos los derechos reservados.</p>
+                    <p>Proyecto C# ASP.NET Core MVC</p>
                 </div>
             </div>
         </div>

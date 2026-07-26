@@ -1,0 +1,90 @@
+@model CINESMART.Models.Compra?
+
+@{
+    ViewData["Title"] = "Consultar mi Reserva";
+    var codigoBuscado = ViewBag.CodigoBuscado as string;
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🔍 MÓDULO DE CONSULTA</span>
+        <h1>Consultar Reserva de Boletos</h1>
+        <p>Ingresa tu código de reserva (ej. CS-884920) para visualizar y reimprimir tu comprobante.</p>
+    </div>
+</section>
+
+<section class="container py-5" style="max-width: 800px;">
+    <!-- Formulario de búsqueda -->
+    <div class="p-4 rounded-4 border border-secondary mb-5" style="background: var(--bg-card);">
+        <form asp-controller="Home" asp-action="BuscarReserva" method="get" class="row g-3 align-items-center">
+            <div class="col-md-8">
+                <label for="codigo" class="form-label text-muted">Código de Reserva:</label>
+                <input type="text" id="codigo" name="codigo" class="form-control custom-input fs-5" placeholder="Ej. CS-884920" value="@codigoBuscado" required />
+            </div>
+            <div class="col-md-4 pt-md-4">
+                <button type="submit" class="btn-glow-gold w-100 py-2 fs-6">
+                    🔍 Buscar Boleto
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Resultados -->
+    @if (!string.IsNullOrEmpty(codigoBuscado))
+    {
+        @if (Model != null)
+        {
+            <div class="ticket-card-container">
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="ticket-brand">🎬 CINESMART TICKET</span>
+                            <span class="ticket-code">@Model.CodigoReserva</span>
+                        </div>
+                    </div>
+                    <div class="ticket-body">
+                        <h2 class="ticket-movie-title">@Model.Pelicula</h2>
+                        <div class="ticket-details-grid mt-3">
+                            <div class="detail-item">
+                                <span class="label">Titular:</span>
+                                <span class="value">@Model.Cliente</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Correo:</span>
+                                <span class="value">@Model.Correo</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Fecha y Hora:</span>
+                                <span class="value text-gold">📅 @Model.Fecha - 🕒 @Model.Hora</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Sala:</span>
+                                <span class="value">📍 @Model.Sala</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Asientos:</span>
+                                <span class="value text-gold">💺 @(Model.Asientos != null && Model.Asientos.Any() ? string.Join(", ", Model.Asientos) : "Asignado en sala")</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Total Pagado:</span>
+                                <span class="value text-success fs-5">Bs. @Model.Total.ToString("F2")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket-footer d-flex justify-content-between">
+                        <button onclick="window.print()" class="btn-print">🖨️ Imprimir Ticket</button>
+                        <span class="text-success align-self-center">✔ Reserva Válida</span>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger text-center p-4 rounded-4">
+                <h4>❌ No se encontró ninguna reserva</h4>
+                <p>El código <strong>@codigoBuscado</strong> no está registrado en el sistema o expiró.</p>
+                <small>Intenta buscando con el código de prueba: <code>CS-884920</code></small>
+            </div>
+        }
+    }
+</section>
