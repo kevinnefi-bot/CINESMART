@@ -1,0 +1,100 @@
+@model List<CINESMART.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "El Cine Comienza Aquí";
+}
+
+<section class="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content text-center">
+        <span class="hero-badge">🍿 CARTELERA EXCLUSIVA 2026</span>
+        <h1 class="hero-title">Vive la Magia del Cine en <span class="text-gold">CINESMART</span></h1>
+        <p class="hero-description">
+            Disfruta de los últimos estrenos en salas Dolby Atmos, pantallas 4K Laser y con los mejores combos de palomitas directo a tu asiento.
+        </p>
+        <div class="hero-buttons">
+            <a asp-controller="Home" asp-action="Cartelera" class="btn-glow-gold">
+                🎬 Ver Cartelera Completa
+            </a>
+            <a asp-controller="Home" asp-action="Combos" class="btn-glass">
+                🍿 Ver Combos
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Películas Destacadas -->
+<section class="featured-section container py-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="sub-title">EN PANTALLA GRANDE</span>
+            <h2 class="section-title">Películas Destacadas</h2>
+        </div>
+        <a asp-controller="Home" asp-action="Cartelera" class="view-all-link">Ver todas &rarr;</a>
+    </div>
+
+    <div class="row g-4">
+        @if (Model != null)
+        {
+            @foreach (var pelicula in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="movie-card-modern">
+                        <div class="poster-wrapper">
+                            <div class="poster-placeholder">
+                                @if (pelicula.Titulo.Contains("Avatar")) { <span>🌊</span> }
+                                else if (pelicula.Titulo.Contains("Spider")) { <span>🕷️</span> }
+                                else if (pelicula.Titulo.Contains("Inside")) { <span>🧠</span> }
+                                else if (pelicula.Titulo.Contains("Interestelar")) { <span>🚀</span> }
+                                else { <span>🦖</span> }
+                            </div>
+                            <span class="badge-rating">🔞 @pelicula.Clasificacion</span>
+                            <span class="badge-duration">⏱️ @pelicula.Duracion</span>
+                        </div>
+                        <div class="movie-card-body">
+                            <span class="genre-tag">@pelicula.Genero</span>
+                            <h3 class="movie-card-title">@pelicula.Titulo</h3>
+                            <p class="movie-card-desc">@pelicula.Descripcion</p>
+                            <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-card-buy">
+                                🎟️ Comprar Entradas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<!-- Ventajas CINESMART -->
+<section class="features-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="sub-title">EXPERIENCIA PREMIUM</span>
+            <h2 class="section-title">¿Por qué elegir CINESMART?</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">📽️</div>
+                    <h4>Proyección 4K & Dolby</h4>
+                    <p>Imágenes hiperrealistas con sonido envolvente Dolby Atmos en todas nuestras salas.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">💺</div>
+                    <h4>Asientos Numerados</h4>
+                    <p>Elige tu asiento preferido desde tu celular o computadora en tiempo real.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">🥤</div>
+                    <h4>Combos Exclusivos</h4>
+                    <p>Acompaña tu función con palomitas recién hechas, nachos y bebidas de gran tamaño.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

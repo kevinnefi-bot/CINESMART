@@ -1,0 +1,89 @@
+@model CINESMART.Models.Compra
+
+@{
+    ViewData["Title"] = "Boleto Confirmado - " + Model.CodigoReserva;
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🎉 RESERVA EXITOSA</span>
+        <h1>¡Disfruta tu Película!</h1>
+        <p>Hemos generado tu boleto digital. Preséntalo en la entrada de la sala.</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="ticket-card-container">
+        <div class="ticket-card">
+            <!-- Ticket Header -->
+            <div class="ticket-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="ticket-brand">🎬 CINESMART TICKET</span>
+                    <span class="ticket-code">@Model.CodigoReserva</span>
+                </div>
+            </div>
+
+            <!-- Ticket Body -->
+            <div class="ticket-body">
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="ticket-movie-title">@Model.Pelicula</h2>
+                        <div class="ticket-details-grid mt-3">
+                            <div class="detail-item">
+                                <span class="label">Titular:</span>
+                                <span class="value">@Model.Cliente</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Correo:</span>
+                                <span class="value">@Model.Correo</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Fecha y Hora:</span>
+                                <span class="value text-gold">📅 @Model.Fecha - 🕒 @Model.Hora</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Sala:</span>
+                                <span class="value">📍 @Model.Sala</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Cantidad:</span>
+                                <span class="value">🎟️ @Model.CantidadEntradas entrada(s)</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Asientos:</span>
+                                <span class="value text-gold">💺 @(Model.Asientos != null && Model.Asientos.Any() ? string.Join(", ", Model.Asientos) : "General / Asignado en sala")</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Combo Snacking:</span>
+                                <span class="value">🍿 @Model.ComboNombre</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Total Pagado:</span>
+                                <span class="value text-success font-weight-bold fs-5">Bs. @Model.Total.ToString("F2")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="barcode-wrapper p-3">
+                            <div class="barcode-lines">
+                                ||||||| | ||||| || |||||||| | |||||| ||||
+                            </div>
+                            <span class="barcode-num">@Model.CodigoReserva</span>
+                        </div>
+                        <p class="text-muted small mt-2">Muestra este código QR/Barras al ingresar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ticket Footer Buttons -->
+            <div class="ticket-footer d-flex justify-content-between align-items-center">
+                <button onclick="window.print()" class="btn-print">
+                    🖨️ Imprimir / Guardar PDF
+                </button>
+                <a asp-controller="Home" asp-action="Cartelera" class="btn-back">
+                    🎬 Volver a la Cartelera
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

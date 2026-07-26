@@ -1,0 +1,68 @@
+@model List<CINESMART.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "Cartelera";
+    var generoSel = ViewBag.GeneroSeleccionado as string ?? "Todos";
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🎬 ESTRENOS Y FUNCIONES</span>
+        <h1>Cartelera de Cine</h1>
+        <p>Selecciona tu película favorita y reserva tus asientos para la mejor función.</p>
+        
+        <!-- Filtros por Género -->
+        <div class="genre-filters mt-4">
+            <a asp-action="Cartelera" asp-route-genero="Todos" class="filter-chip @(generoSel == "Todos" ? "active" : "")">Todos</a>
+            <a asp-action="Cartelera" asp-route-genero="Ciencia ficción" class="filter-chip @(generoSel == "Ciencia ficción" ? "active" : "")">🚀 Ciencia Ficción</a>
+            <a asp-action="Cartelera" asp-route-genero="Acción" class="filter-chip @(generoSel == "Acción" ? "active" : "")">💥 Acción</a>
+            <a asp-action="Cartelera" asp-route-genero="Animación" class="filter-chip @(generoSel == "Animación" ? "active" : "")">🎨 Animación</a>
+        </div>
+    </div>
+</section>
+
+<section class="movies-section container py-5">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center py-5">
+            <h3>No se encontraron películas para este filtro.</h3>
+            <a asp-action="Cartelera" class="btn-glow-gold mt-3">Ver todas las películas</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var pelicula in Model)
+            {
+                <div class="col-lg-6">
+                    <div class="movie-horizontal-card">
+                        <div class="poster-box">
+                            <div class="poster-emoji">
+                                @if (pelicula.Titulo.Contains("Avatar")) { <span>🌊</span> }
+                                else if (pelicula.Titulo.Contains("Spider")) { <span>🕷️</span> }
+                                else if (pelicula.Titulo.Contains("Inside")) { <span>🧠</span> }
+                                else if (pelicula.Titulo.Contains("Interestelar")) { <span>🚀</span> }
+                                else { <span>🦖</span> }
+                            </div>
+                            <span class="badge-format">IMAX 3D</span>
+                        </div>
+                        <div class="movie-detail-box">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="genre-tag">@pelicula.Genero</span>
+                                <span class="rating-pill">🔞 @pelicula.Clasificacion</span>
+                            </div>
+                            <h3>@pelicula.Titulo</h3>
+                            <p>@pelicula.Descripcion</p>
+                            <div class="meta-info mb-3">
+                                <span>⏱️ <strong>Duración:</strong> @pelicula.Duracion</span>
+                            </div>
+                            <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-primary-action">
+                                🎟️ Ver Funciones & Entradas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>

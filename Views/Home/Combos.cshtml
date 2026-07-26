@@ -1,0 +1,41 @@
+@model List<CINESMART.Models.Combo>
+
+@{
+    ViewData["Title"] = "Combos & Dulcería";
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🍿 DULCERÍA & SNACKS</span>
+        <h1>Combos de Cine</h1>
+        <p>Acompaña tu película con las mejores palomitas, bebidas heladas y snacks deliciosos.</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-4">
+        @if (Model != null)
+        {
+            @foreach (var combo in Model)
+            {
+                <div class="col-md-4">
+                    <div class="combo-card">
+                        <div class="combo-icon">
+                            @if (combo.Nombre.Contains("Clásico")) { <span>🍿🥤</span> }
+                            else if (combo.Nombre.Contains("Pareja")) { <span>🍿🍿🥤🥤</span> }
+                            else { <span>🍿🥤🥤🧀</span> }
+                        </div>
+                        <h3 class="combo-title">@combo.Nombre</h3>
+                        <p class="combo-desc">@combo.Descripcion</p>
+                        <div class="combo-price-tag">
+                            Bs. @combo.Precio
+                        </div>
+                        <a asp-controller="Home" asp-action="Comprar" class="btn-combo-add mt-3">
+                            🎟️ Comprar con Entradas
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>

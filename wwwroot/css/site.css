@@ -1,0 +1,802 @@
+/* =========================================================
+   CINESMART - Modern Premium Cinema UI Stylesheet
+   ========================================================= */
+
+:root {
+    --bg-dark: #09090e;
+    --bg-card: #12121c;
+    --bg-card-hover: #181827;
+    --bg-nav: rgba(15, 15, 24, 0.85);
+    
+    --primary-gold: #f59e0b;
+    --primary-gold-hover: #d97706;
+    --gold-glow: rgba(245, 158, 11, 0.25);
+    
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(245, 158, 11, 0.4);
+    
+    --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(40, 25, 75, 0.4) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(15, 30, 60, 0.3) 0%, transparent 45%);
+    background-attachment: fixed;
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+.cinema-navbar {
+    background: var(--bg-nav);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.cinema-logo {
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+    color: var(--text-main) !important;
+}
+
+.cinema-logo .logo-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.cinema-logo:hover .logo-icon {
+    transform: rotate(-10deg) scale(1.1);
+}
+
+.cinema-logo .highlight {
+    color: var(--primary-gold);
+}
+
+.cinema-navbar .nav-link {
+    color: #cbd5e1 !important;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.cinema-navbar .nav-link:hover {
+    color: var(--primary-gold) !important;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-btn-buy {
+    background: var(--primary-gold);
+    color: #000 !important;
+    font-weight: 700 !important;
+    margin-left: 0.5rem;
+}
+
+.nav-btn-buy:hover {
+    background: var(--primary-gold-hover) !important;
+    color: #000 !important;
+    box-shadow: 0 4px 15px var(--gold-glow);
+}
+
+/* =========================================================
+   HERO BANNER
+   ========================================================= */
+.hero-banner {
+    position: relative;
+    padding: 6rem 1rem;
+    background: linear-gradient(180deg, rgba(20, 15, 35, 0.8) 0%, rgba(9, 9, 14, 1) 100%);
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--primary-gold);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+}
+
+.text-gold {
+    color: var(--primary-gold);
+}
+
+.hero-description {
+    max-width: 680px;
+    margin: 0 auto 2rem;
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-glow-gold {
+    background: var(--primary-gold);
+    color: #0d0d12;
+    font-weight: 700;
+    padding: 0.85rem 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px var(--gold-glow);
+}
+
+.btn-glow-gold:hover {
+    background: #fbbf24;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
+}
+
+.btn-glass {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-main);
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   MOVIE CARDS & GRID
+   ========================================================= */
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.sub-title {
+    color: var(--primary-gold);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.view-all-link {
+    color: var(--primary-gold);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.view-all-link:hover {
+    color: #fbbf24;
+    text-decoration: underline;
+}
+
+.movie-card-modern {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.movie-card-modern:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-hover);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 15px var(--gold-glow);
+}
+
+.poster-wrapper {
+    height: 240px;
+    background: linear-gradient(135deg, #1e1b4b, #0f172a);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.poster-placeholder {
+    font-size: 5rem;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+}
+
+.badge-rating, .badge-duration, .badge-format {
+    position: absolute;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(15, 15, 24, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+}
+
+.badge-rating { top: 12px; left: 12px; }
+.badge-duration { top: 12px; right: 12px; }
+.badge-format { bottom: 12px; right: 12px; color: var(--primary-gold); border-color: rgba(245, 158, 11, 0.3); }
+
+.movie-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.genre-tag {
+    color: var(--primary-gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.movie-card-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0.4rem 0 0.6rem;
+}
+
+.movie-card-desc {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.btn-card-buy {
+    display: block;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.movie-card-modern:hover .btn-card-buy {
+    background: var(--primary-gold);
+    color: #000;
+    border-color: var(--primary-gold);
+}
+
+/* Horizontal Movie Cards (Cartelera) */
+.movie-horizontal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.movie-horizontal-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+}
+
+.poster-box {
+    width: 180px;
+    min-width: 180px;
+    background: linear-gradient(135deg, #311b92, #0d47a1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.poster-emoji {
+    font-size: 4rem;
+}
+
+.movie-detail-box {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.rating-pill {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.btn-primary-action {
+    display: inline-block;
+    background: var(--primary-gold);
+    color: #000;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-primary-action:hover {
+    background: #fbbf24;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Genre Filter Chips */
+.genre-filters {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.filter-chip:hover, .filter-chip.active {
+    background: var(--primary-gold);
+    color: #000;
+    border-color: var(--primary-gold);
+}
+
+/* =========================================================
+   FEATURES & COMBOS
+   ========================================================= */
+.feature-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-5px);
+}
+
+.feature-icon-wrapper {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.combo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.combo-card:hover {
+    border-color: var(--primary-gold);
+    transform: translateY(-5px);
+}
+
+.combo-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.combo-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.combo-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    min-height: 48px;
+}
+
+.combo-price-tag {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-gold);
+    margin: 1rem 0;
+}
+
+.btn-combo-add {
+    display: inline-block;
+    width: 100%;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid var(--primary-gold);
+    color: var(--primary-gold);
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-combo-add:hover {
+    background: var(--primary-gold);
+    color: #000;
+}
+
+/* =========================================================
+   COMPRA FORM & SEAT MATRIX
+   ========================================================= */
+.movie-summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    sticky: top;
+}
+
+.poster-preview {
+    height: 200px;
+    background: linear-gradient(135deg, #311b92, #1a237e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+}
+
+.summary-body {
+    padding: 1.5rem;
+}
+
+.badge-pill {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.purchase-form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2rem;
+}
+
+.step-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--primary-gold);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-input {
+    background: #09090f !important;
+    border: 1px solid var(--border-color) !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+    padding: 0.75rem 1rem !important;
+}
+
+.custom-input:focus {
+    border-color: var(--primary-gold) !important;
+    box-shadow: 0 0 0 3px var(--gold-glow) !important;
+}
+
+/* Seats UI */
+.cinema-screen-wrapper {
+    perspective: 400px;
+}
+
+.cinema-screen {
+    background: linear-gradient(90deg, transparent 0%, #38bdf8 50%, transparent 100%);
+    height: 12px;
+    border-radius: 50%;
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
+    margin-bottom: 2rem;
+    padding-top: 15px;
+}
+
+.seat-sample {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.seat-sample.available { background: #334155; }
+.seat-sample.selected { background: var(--primary-gold); }
+.seat-sample.occupied { background: #ef4444; }
+
+.seat-row {
+    align-items: center;
+}
+
+.row-label {
+    width: 25px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.seat-btn {
+    width: 40px;
+    height: 38px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.seat-btn.available {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+.seat-btn.available:hover {
+    background: #334155;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.seat-btn.selected {
+    background: var(--primary-gold) !important;
+    color: #000 !important;
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.seat-btn.occupied {
+    background: #475569 !important;
+    color: #64748b !important;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.total-summary-box {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.total-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.total-amount {
+    color: var(--primary-gold);
+    font-weight: 900;
+}
+
+.btn-confirm-purchase {
+    background: var(--primary-gold);
+    color: #000;
+    font-weight: 800;
+    font-size: 1.05rem;
+    border: none;
+    padding: 0.9rem 1.8rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-confirm-purchase:hover {
+    background: #fbbf24;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--gold-glow);
+}
+
+/* =========================================================
+   TICKET RECEIPT (CONFIRMACION)
+   ========================================================= */
+.ticket-card-container {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.ticket-card {
+    background: #141420;
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.ticket-header {
+    background: linear-gradient(90deg, #1e1b4b, #311b92);
+    padding: 1.25rem 2rem;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.15);
+}
+
+.ticket-brand {
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--primary-gold);
+}
+
+.ticket-code {
+    font-family: monospace;
+    font-size: 1.1rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    color: #38bdf8;
+}
+
+.ticket-body {
+    padding: 2rem;
+}
+
+.ticket-movie-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.ticket-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.detail-item .label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.detail-item .value {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.barcode-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    color: #000;
+}
+
+.barcode-lines {
+    font-family: monospace;
+    font-weight: 900;
+    letter-spacing: 3px;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+.barcode-num {
+    font-size: 0.75rem;
+    font-family: monospace;
+}
+
+.ticket-footer {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.25rem 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-print {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-print:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-back {
+    background: var(--primary-gold);
+    color: #000;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.cinema-footer {
+    background: #06060a;
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 0;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.cinema-footer h3 span { color: var(--primary-gold); }
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li { margin-bottom: 0.5rem; }
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-gold);
+}
+
+.footer-copy {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .movie-horizontal-card { flex-direction: column; }
+    .poster-box { width: 100%; min-width: 100%; height: 160px; }
+    .footer-content { grid-template-columns: 1fr; }
+    .ticket-details-grid { grid-template-columns: 1fr; }
+    .total-summary-box { flex-direction: column; gap: 1rem; text-align: center; }
+}

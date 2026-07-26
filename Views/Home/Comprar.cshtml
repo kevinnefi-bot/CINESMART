@@ -1,0 +1,231 @@
+@model CINESMART.Models.Pelicula
+
+@{
+    ViewData["Title"] = "Comprar Entradas - " + Model.Titulo;
+    var funciones = ViewBag.Funciones as List<CINESMART.Models.Funcion>;
+    var combos = ViewBag.Combos as List<CINESMART.Models.Combo>;
+    string[] filas = new string[] { "A", "B", "C", "D" };
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🎟️ RESERVA TU LUGAR</span>
+        <h1>Comprar Entradas</h1>
+        <p>Elige tu función, selecciona tus asientos e incluye tus combos favoritos.</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-5">
+        <!-- Detalles de la Película -->
+        <div class="col-lg-4">
+            <div class="movie-summary-card">
+                <div class="poster-preview">
+                    @if (Model.Titulo.Contains("Avatar")) { <span>🌊</span> }
+                    else if (Model.Titulo.Contains("Spider")) { <span>🕷️</span> }
+                    else if (Model.Titulo.Contains("Inside")) { <span>🧠</span> }
+                    else if (Model.Titulo.Contains("Interestelar")) { <span>🚀</span> }
+                    else { <span>🦖</span> }
+                </div>
+                <div class="summary-body">
+                    <span class="genre-tag">@Model.Genero</span>
+                    <h2>@Model.Titulo</h2>
+                    <p>@Model.Descripcion</p>
+                    <div class="details-badges mt-3">
+                        <span class="badge-pill">⏱️ @Model.Duracion</span>
+                        <span class="badge-pill">🔞 @Model.Clasificacion</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Compra con Asientos y Combos -->
+        <div class="col-lg-8">
+            <form asp-controller="Home" asp-action="ConfirmarCompra" method="post" id="purchaseForm" class="purchase-form-card">
+                
+                <!-- 1. Selección de Función -->
+                <div class="form-step mb-4">
+                    <h3 class="step-title">1. Selecciona la Función</h3>
+                    <div class="form-group">
+                        <label for="funcionId" class="form-label">Horario y Sala disponible:</label>
+                        <select id="funcionId" name="funcionId" class="form-select custom-input" required>
+                            <option value="" data-precio="0">-- Seleccionar función --</option>
+                            @if (funciones != null)
+                            {
+                                foreach (var f in funciones)
+                                {
+                                    <option value="@f.Id" data-precio="@f.Precio">
+                                        📅 @f.Fecha - 🕒 @f.Hora - 📍 @f.Sala (Bs. @f.Precio)
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 2. Selección de Cantidad -->
+                <div class="form-step mb-4">
+                    <h3 class="step-title">2. Cantidad de Entradas</h3>
+                    <div class="form-group">
+                        <label for="cantidadEntradas" class="form-label">Número de boletos:</label>
+                        <select id="cantidadEntradas" name="cantidadEntradas" class="form-select custom-input" required>
+                            <option value="1">1 Entrada</option>
+                            <option value="2">2 Entradas</option>
+                            <option value="3">3 Entradas</option>
+                            <option value="4">4 Entradas</option>
+                            <option value="5">5 Entradas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Mapa Visual de Asientos -->
+                <div class="form-step mb-4">
+                    <h3 class="step-title">3. Selecciona tus Asientos en Sala</h3>
+                    <div class="cinema-screen-wrapper text-center my-3">
+                        <div class="cinema-screen">PANTALLA PROYECTORA 🍿</div>
+                    </div>
+                    
+                    <div class="seat-grid-container text-center">
+                        <div class="seat-legend d-flex justify-content-center gap-4 mb-3">
+                            <span><span class="seat-sample available"></span> Disponible</span>
+                            <span><span class="seat-sample selected"></span> Seleccionado</span>
+                            <span><span class="seat-sample occupied"></span> Ocupado</span>
+                        </div>
+
+                        <div class="seat-matrix" id="seatMatrix">
+                            @foreach (var fila in filas)
+                            {
+                                <div class="seat-row d-flex justify-content-center gap-2 mb-2">
+                                    <span class="row-label">@fila</span>
+                                    @for (int col = 1; col <= 6; col++)
+                                    {
+                                        string seatId = $"{fila}{col}";
+                                        bool isOccupied = (fila == "B" && col == 3) || (fila == "C" && col == 4);
+                                        <button type="button" 
+                                                class="seat-btn @(isOccupied ? "occupied" : "available")" 
+                                                data-seat="@seatId" 
+                                                @(isOccupied ? "disabled" : "")>
+                                            @seatId
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <input type="hidden" id="asientosSeleccionados" name="asientosSeleccionados" value="" />
+                        <div class="selected-seats-info mt-2">
+                            <span>Asientos seleccionados: <strong id="seatsText" class="text-gold">Ninguno</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Combos de Dulcería -->
+                <div class="form-step mb-4">
+                    <h3 class="step-title">4. Combos & Snacks (Opcional)</h3>
+                    <div class="form-group">
+                        <select id="comboId" name="comboId" class="form-select custom-input">
+                            <option value="" data-precio="0">🍿 Sin combo de dulcería</option>
+                            @if (combos != null)
+                            {
+                                foreach (var c in combos)
+                                {
+                                    <option value="@c.Id" data-precio="@c.Precio">
+                                        🍿 @c.Nombre - @c.Descripcion (+Bs. @c.Precio)
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 5. Datos Personales -->
+                <div class="form-step mb-4">
+                    <h3 class="step-title">5. Tus Datos para el Envío del Boleto</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="cliente" class="form-label">Nombre Completo:</label>
+                            <input type="text" id="cliente" name="cliente" class="form-control custom-input" placeholder="Ej. Kevin Balcazar" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="correo" class="form-label">Correo Electrónico:</label>
+                            <input type="email" id="correo" name="correo" class="form-control custom-input" placeholder="ejemplo@correo.com" required />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de Costo -->
+                <div class="total-summary-box d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="total-label">Total a pagar:</span>
+                        <h2 class="total-amount mb-0" id="totalAmountText">Bs. 0.00</h2>
+                    </div>
+                    <button type="submit" class="btn-confirm-purchase">
+                        🎟️ Confirmar Reserva & Comprar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const funcionSelect = document.getElementById("funcionId");
+            const cantidadSelect = document.getElementById("cantidadEntradas");
+            const comboSelect = document.getElementById("comboId");
+            const totalText = document.getElementById("totalAmountText");
+            const seatBtns = document.querySelectorAll(".seat-btn.available");
+            const seatsInput = document.getElementById("asientosSeleccionados");
+            const seatsText = document.getElementById("seatsText");
+
+            let selectedSeats = [];
+
+            function updateTotal() {
+                const funcionOption = funcionSelect.options[funcionSelect.selectedIndex];
+                const precioFuncion = parseFloat(funcionOption.getAttribute("data-precio") || 0);
+                const cantidad = parseInt(cantidadSelect.value || 1);
+
+                const comboOption = comboSelect.options[comboSelect.selectedIndex];
+                const precioCombo = parseFloat(comboOption.getAttribute("data-precio") || 0);
+
+                const total = (precioFuncion * cantidad) + precioCombo;
+                totalText.textContent = "Bs. " + total.toFixed(2);
+            }
+
+            seatBtns.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const seatId = this.getAttribute("data-seat");
+                    const maxQty = parseInt(cantidadSelect.value);
+
+                    if (this.classList.contains("selected")) {
+                        this.classList.remove("selected");
+                        selectedSeats = selectedSeats.filter(s => s !== seatId);
+                    } else {
+                        if (selectedSeats.length >= maxQty) {
+                            const removed = selectedSeats.shift();
+                            const prevBtn = document.querySelector(`[data-seat="${removed}"]`);
+                            if (prevBtn) prevBtn.classList.remove("selected");
+                        }
+                        this.classList.add("selected");
+                        selectedSeats.push(seatId);
+                    }
+
+                    seatsInput.value = selectedSeats.join(",");
+                    seatsText.textContent = selectedSeats.length > 0 ? selectedSeats.join(", ") : "Ninguno";
+                });
+            });
+
+            funcionSelect.addEventListener("change", updateTotal);
+            cantidadSelect.addEventListener("change", function() {
+                updateTotal();
+                selectedSeats = [];
+                seatBtns.forEach(b => b.classList.remove("selected"));
+                seatsInput.value = "";
+                seatsText.textContent = "Ninguno";
+            });
+            comboSelect.addEventListener("change", updateTotal);
+
+            updateTotal();
+        });
+    </script>
+}
