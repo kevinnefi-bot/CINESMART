@@ -7,8 +7,8 @@
 <section class="page-header">
     <div class="container text-center">
         <span class="hero-badge">🍿 DULCERÍA & SNACKS</span>
-        <h1>Combos de Cine</h1>
-        <p>Acompaña tu película con las mejores palomitas, bebidas heladas y snacks deliciosos.</p>
+        <h1>Combos de Pipocas y Refrescos</h1>
+        <p>Disfruta de nuestras mejores pipocas mantecosas y gaseosas heladas durante tu película.</p>
     </div>
 </section>
 
@@ -20,15 +20,13 @@
             {
                 <div class="col-md-4">
                     <div class="combo-card">
-                        <div class="combo-icon">
-                            @if (combo.Nombre.Contains("Clásico")) { <span>🍿🥤</span> }
-                            else if (combo.Nombre.Contains("Pareja")) { <span>🍿🍿🥤🥤</span> }
-                            else { <span>🍿🥤🥤🧀</span> }
+                        <div class="combo-img-wrapper mb-3 rounded-4 overflow-hidden" style="height: 220px; background: #000;">
+                            <img src="@combo.Imagen" alt="@combo.Nombre" class="img-fluid w-100 h-100" style="object-fit: cover;" />
                         </div>
-                        <h3 class="combo-title">@combo.Nombre</h3>
-                        <p class="combo-desc">@combo.Descripcion</p>
-                        <div class="combo-price-tag">
-                            Bs. @combo.Precio
+                        <h3 class="combo-title text-gold">@combo.Nombre</h3>
+                        <p class="combo-desc text-light opacity-90">@combo.Descripcion</p>
+                        <div class="combo-price-tag text-success">
+                            Bs. @combo.Precio.ToString("F2")
                         </div>
                         <a asp-controller="Home" asp-action="Comprar" class="btn-combo-add mt-3">
                             🎟️ Comprar con Entradas

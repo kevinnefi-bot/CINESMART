@@ -10,22 +10,22 @@
     <div class="container text-center">
         <span class="hero-badge">🎟️ PASO 1 DE 2</span>
         <h1>Selección de Boletos & Asientos</h1>
-        <p>Elige tu función, cantidad de entradas y tus asientos en sala.</p>
+        <p>Elige tu función, cantidad de entradas y tus asientos en la sala.</p>
     </div>
 </section>
 
 <section class="container py-5">
     <div class="row g-5">
-        <!-- Resumen de la Película -->
+        <!-- Resumen de la Película con Foto Real -->
         <div class="col-lg-4">
             <div class="movie-summary-card">
-                <div class="poster-preview">
+                <div class="poster-preview" style="height: 380px;">
                     <img src="@Model.Imagen" alt="@Model.Titulo" class="img-fluid w-100 h-100" style="object-fit: cover;" />
                 </div>
                 <div class="summary-body">
                     <span class="genre-tag">@Model.Genero</span>
-                    <h2>@Model.Titulo</h2>
-                    <p class="text-muted">@Model.Descripcion</p>
+                    <h2 class="text-gold mt-2">@Model.Titulo</h2>
+                    <p class="text-light opacity-90">@Model.Descripcion</p>
                     <div class="details-badges mt-3">
                         <span class="badge-pill">⏱️ @Model.Duracion</span>
                         <span class="badge-pill">🔞 @Model.Clasificacion</span>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <!-- Formulario Paso 1: Entradas + Asientos + Datos -->
+        <!-- Formulario Paso 1: Entradas + Asientos Más Grandes -->
         <div class="col-lg-8">
             <form asp-controller="Home" asp-action="AgregarCombo" method="post" id="purchaseForm" class="purchase-form-card">
                 
@@ -42,7 +42,7 @@
                 <div class="form-step mb-4">
                     <h3 class="step-title">1. Selecciona la Función y Hora</h3>
                     <div class="form-group">
-                        <label for="funcionId" class="form-label text-light">Horarios en sala:</label>
+                        <label for="funcionId" class="form-label text-light fs-5">Horarios en sala:</label>
                         <select id="funcionId" name="funcionId" class="form-select custom-input" required>
                             <option value="" data-precio="0">-- Seleccionar función --</option>
                             @if (funciones != null)
@@ -62,7 +62,7 @@
                 <div class="form-step mb-4">
                     <h3 class="step-title">2. Cantidad de Boletos</h3>
                     <div class="form-group">
-                        <label for="cantidadEntradas" class="form-label text-light">Número de entradas:</label>
+                        <label for="cantidadEntradas" class="form-label text-light fs-5">Número de entradas:</label>
                         <select id="cantidadEntradas" name="cantidadEntradas" class="form-select custom-input" required>
                             <option value="1">1 Entrada</option>
                             <option value="2">2 Entradas</option>
@@ -73,25 +73,26 @@
                     </div>
                 </div>
 
-                <!-- 3. Mapa de Asientos -->
+                <!-- 3. Mapa de Asientos MÁS GRANDES Y AMPLIOS -->
                 <div class="form-step mb-4">
-                    <h3 class="step-title">3. Selecciona tus Asientos</h3>
-                    <div class="cinema-screen-wrapper text-center my-3">
+                    <h3 class="step-title">3. Selecciona tus Asientos en la Sala</h3>
+                    <div class="cinema-screen-wrapper text-center my-4">
                         <div class="cinema-screen">PANTALLA PROYECTORA 🍿</div>
                     </div>
                     
                     <div class="seat-grid-container text-center">
-                        <div class="seat-legend d-flex justify-content-center gap-4 mb-3">
+                        <div class="seat-legend d-flex justify-content-center gap-4 mb-4 fs-6">
                             <span><span class="seat-sample available"></span> Disponible</span>
                             <span><span class="seat-sample selected"></span> Seleccionado</span>
                             <span><span class="seat-sample occupied"></span> Ocupado</span>
                         </div>
 
-                        <div class="seat-matrix" id="seatMatrix">
+                        <!-- Matriz con botones más amplios -->
+                        <div class="seat-matrix py-2" id="seatMatrix">
                             @foreach (var fila in filas)
                             {
-                                <div class="seat-row d-flex justify-content-center gap-2 mb-2">
-                                    <span class="row-label text-light">@fila</span>
+                                <div class="seat-row d-flex justify-content-center align-items-center gap-3 mb-3">
+                                    <span class="row-label text-gold font-weight-bold">@fila</span>
                                     @for (int col = 1; col <= 6; col++)
                                     {
                                         string seatId = $"{fila}{col}";
@@ -107,8 +108,8 @@
                             }
                         </div>
                         <input type="hidden" id="asientosSeleccionados" name="asientosSeleccionados" value="" />
-                        <div class="selected-seats-info mt-2">
-                            <span class="text-light">Asientos seleccionados: <strong id="seatsText" class="text-gold">Ninguno</strong></span>
+                        <div class="selected-seats-info mt-3 p-3 bg-dark rounded-3 border border-secondary">
+                            <span class="text-light fs-5">Asientos seleccionados: <strong id="seatsText" class="text-gold fs-4">Ninguno</strong></span>
                         </div>
                     </div>
                 </div>
@@ -118,11 +119,11 @@
                     <h3 class="step-title">4. Tus Datos de Comprador</h3>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label for="cliente" class="form-label text-light">Nombre Completo:</label>
+                            <label for="cliente" class="form-label text-light fs-6">Nombre Completo:</label>
                             <input type="text" id="cliente" name="cliente" class="form-control custom-input" placeholder="Ej. Kevin Balcazar" required />
                         </div>
                         <div class="col-md-6">
-                            <label for="correo" class="form-label text-light">Correo Electrónico:</label>
+                            <label for="correo" class="form-label text-light fs-6">Correo Electrónico:</label>
                             <input type="email" id="correo" name="correo" class="form-control custom-input" placeholder="ejemplo@correo.com" required />
                         </div>
                     </div>
@@ -131,11 +132,11 @@
                 <!-- Resumen y Botón al Paso 2 -->
                 <div class="total-summary-box d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <span class="total-label text-muted">Subtotal de entradas:</span>
-                        <h2 class="total-amount mb-0" id="totalAmountText">Bs. 0.00</h2>
+                        <span class="total-label text-muted fs-6">Subtotal de entradas:</span>
+                        <h2 class="total-amount mb-0 text-success font-weight-bold" id="totalAmountText">Bs. 0.00</h2>
                     </div>
                     <button type="submit" class="btn-confirm-purchase">
-                        🍿 Continuar a Combos de Dulcería &rarr;
+                        🍿 Continuar a Combos de Comida &rarr;
                     </button>
                 </div>
             </form>

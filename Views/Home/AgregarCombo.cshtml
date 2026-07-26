@@ -14,7 +14,7 @@
     <div class="container text-center">
         <span class="hero-badge">🍿 PASO 2 DE 2</span>
         <h1>¿Deseas agregar un combo de comida?</h1>
-        <p>Acompaña tus entradas para <strong>@pelicula?.Titulo</strong> con nuestros combos de palomitas y gaseosas.</p>
+        <p>Acompaña tus entradas para <strong>@pelicula?.Titulo</strong> con nuestras deliciosas pipocas y refrescos helados.</p>
     </div>
 </section>
 
@@ -30,10 +30,12 @@
         <div class="row g-4 justify-content-center mb-5">
             <!-- Opción: Sin Combo -->
             <div class="col-md-3 col-sm-6">
-                <label class="combo-select-card h-100 p-4 text-center rounded-4 border border-secondary d-flex flex-column justify-content-between cursor-pointer" style="background: #12121c;">
+                <label class="combo-select-card h-100 p-3 text-center rounded-4 border border-secondary d-flex flex-column justify-content-between cursor-pointer" style="background: #12121c;">
                     <div>
-                        <input type="radio" name="comboId" value="" data-precio="0" checked class="form-check-input mb-3" style="width: 22px; height: 22px;" />
-                        <div class="fs-1 mb-2">🚫</div>
+                        <input type="radio" name="comboId" value="" data-precio="0" checked class="form-check-input mb-3" style="width: 24px; height: 24px;" />
+                        <div class="p-3 bg-dark rounded-3 mb-3">
+                            <span class="fs-1">🚫</span>
+                        </div>
                         <h4 class="text-light">Sin Combo</h4>
                         <p class="text-muted small">Solo comprar las entradas de cine.</p>
                     </div>
@@ -41,31 +43,32 @@
                 </label>
             </div>
 
-            <!-- Opciones de Combos -->
+            <!-- Combos con FOTOS REALES de Pipocas y Refrescos -->
             @if (combos != null)
             {
                 foreach (var c in combos)
                 {
                     <div class="col-md-3 col-sm-6">
-                        <label class="combo-select-card h-100 p-4 text-center rounded-4 border border-warning border-opacity-50 d-flex flex-column justify-content-between cursor-pointer" style="background: #12121c;">
+                        <label class="combo-select-card h-100 p-3 text-center rounded-4 border border-warning border-opacity-50 d-flex flex-column justify-content-between cursor-pointer" style="background: #12121c;">
                             <div>
-                                <input type="radio" name="comboId" value="@c.Id" data-precio="@c.Precio" class="form-check-input mb-3" style="width: 22px; height: 22px;" />
-                                <div class="fs-1 mb-2">
-                                    @if (c.Nombre.Contains("Individual")) { <span>🍿🥤</span> }
-                                    else if (c.Nombre.Contains("Dos")) { <span>🍿🍿🥤🥤</span> }
-                                    else { <span>🍿🍿🥤🧀</span> }
+                                <input type="radio" name="comboId" value="@c.Id" data-precio="@c.Precio" class="form-check-input mb-3" style="width: 24px; height: 24px;" />
+                                
+                                <!-- Foto Real del Combo -->
+                                <div class="rounded-3 overflow-hidden mb-3" style="height: 140px; background: #000;">
+                                    <img src="@c.Imagen" alt="@c.Nombre" class="img-fluid w-100 h-100" style="object-fit: cover;" />
                                 </div>
+
                                 <h4 class="text-gold">@c.Nombre</h4>
-                                <p class="text-muted small">@c.Descripcion</p>
+                                <p class="text-light small opacity-75">@c.Descripcion</p>
                             </div>
-                            <div class="text-success font-weight-bold fs-5">+ Bs. @c.Precio.ToString("F2")</div>
+                            <div class="text-success font-weight-bold fs-5 mt-2">+ Bs. @c.Precio.ToString("F2")</div>
                         </label>
                     </div>
                 }
             }
         </div>
 
-        <!-- Resumen Total y Confirmación -->
+        <!-- Resumen Total -->
         <div class="p-4 rounded-4 border border-warning border-opacity-25" style="background: #151522; max-width: 700px; margin: 0 auto;">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Subtotal Entradas (@cantidadEntradas boleto(s)):</span>

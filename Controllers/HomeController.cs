@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CINESMART.Controllers
 {
-    // Controlador principal que administra las vistas y subprogramas del cine
+    // Controlador principal en C# con subprogramas sencillos y modularidad
     public class HomeController : Controller
     {
-        // 1. Subprograma: Página de Inicio
+        // 1. Subprograma: Inicio
         public IActionResult Index()
         {
             var destacadas = CineData.Peliculas.Take(3).ToList();
             return View(destacadas);
         }
 
-        // 2. Subprograma: Cartelera completa con filtro por género
+        // 2. Subprograma: Cartelera con filtro por género
         public IActionResult Cartelera(string? genero)
         {
             var peliculas = CineData.Peliculas;
@@ -26,7 +26,7 @@ namespace CINESMART.Controllers
             return View(peliculas);
         }
 
-        // 3. Subprograma: Ficha Técnica y Detalles de Película
+        // 3. Subprograma: Detalles de Película
         public IActionResult Detalles(int id)
         {
             var pelicula = CineData.ObtenerPeliculaPorId(id);
@@ -39,7 +39,7 @@ namespace CINESMART.Controllers
             return View(pelicula);
         }
 
-        // 4. PASO 1 de Compra: Selección de Función, Cantidad de Boletos y Asientos
+        // 4. PASO 1 de Compra: Entradas + Asientos + Datos
         public IActionResult Comprar(int id = 1)
         {
             var pelicula = CineData.ObtenerPeliculaPorId(id);
@@ -52,7 +52,7 @@ namespace CINESMART.Controllers
             return View(pelicula);
         }
 
-        // 5. PASO 2 de Compra: Selección opcional de Combos & Dulcería
+        // 5. PASO 2 de Compra: Selección de Combos de comida con fotos reales
         [HttpPost]
         public IActionResult AgregarCombo(
             string cliente,
@@ -77,7 +77,6 @@ namespace CINESMART.Controllers
                 listaAsientos = asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
             }
 
-            // Datos temporales para la vista de selección de combo
             ViewBag.Cliente = cliente;
             ViewBag.Correo = correo;
             ViewBag.Funcion = funcion;
@@ -90,7 +89,7 @@ namespace CINESMART.Controllers
             return View("AgregarCombo");
         }
 
-        // 6. Procesa la reserva final y muestra el boleto digital con QR
+        // 6. Procesa la reserva final y emite el boleto con QR
         [HttpPost]
         public IActionResult ConfirmarCompra(
             string cliente,
@@ -119,7 +118,6 @@ namespace CINESMART.Controllers
                 listaAsientos = asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
             }
 
-            // Generación de código único de reserva (ej. CS-492019)
             string codigoGenerado = $"CS-{Random.Shared.Next(100000, 999999)}";
 
             var compra = new Compra
@@ -142,21 +140,58 @@ namespace CINESMART.Controllers
                 CodigoReserva = codigoGenerado
             };
 
-            // Guardar compra en la lista estática
             CineData.Reservas.Add(compra);
 
             return View("Confirmacion", compra);
         }
 
-        // 7. Subprograma de Combos (Vista independiente de dulcería)
+        // 7. Subprograma: Combos & Dulcería (Vista independiente)
         public IActionResult Combos()
         {
             return View(CineData.Combos);
         }
 
-        // 8. Subprograma: Panel de Administración para ver estadísticas del cine
+        // 8. Subprograma: Login de Usuarios (Sencillo y para estudiantes)
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string usuario, string clave)
+        {
+            // Verificación limpia de usuario
+            if (usuario == "admin" && clave == "1234")
+            {
+                HttpContext.Session.SetString("Usuario", "Administrador");
+                return RedirectToAction("Admin");
+            }
+            else if (usuario == "kevin" && clave == "1234")
+            {
+                HttpContext.Session.SetString("Usuario", "Kevin Balcazar");
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Error = "Usuario o contraseña incorrectos. Intenta con kevin / 1234 o admin / 1234";
+            return View();
+        }
+
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
+
+        // 9. Subprograma: Panel de Administración
         public IActionResult Admin()
         {
+            // Validar si es administrador
+            var usuario = HttpContext.Session.GetString("Usuario");
+            if (usuario != "Administrador")
+            {
+                ViewBag.MensajeAdmin = "Ingresa con el usuario de administrador (admin / 1234) para gestionar el panel.";
+            }
+
             ViewBag.TotalRecaudado = CineData.Reservas.Sum(r => r.Total);
             ViewBag.TotalBoletos = CineData.Reservas.Sum(r => r.CantidadEntradas);
             ViewBag.TotalReservas = CineData.Reservas.Count;

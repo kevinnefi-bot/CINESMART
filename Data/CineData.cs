@@ -2,10 +2,10 @@ using CINESMART.Models;
 
 namespace CINESMART.Data
 {
-    // Clase de datos del proyecto (Programación Modular y Vectores de datos)
+    // Clase de datos principal (Programación Modular en C#)
     public static class CineData
     {
-        // 1. Lista de Películas
+        // 1. Catálogo de Películas con fotos reales
         public static List<Pelicula> Peliculas { get; } = new()
         {
             new Pelicula
@@ -18,8 +18,8 @@ namespace CINESMART.Data
                 Duracion = "2h 25min",
                 Clasificacion = "PG-13",
                 Director = "Destin Daniel Cretton",
-                Reparto = "Tom Holland, Zendaya, Sadik Sink",
-                Imagen = "/images/spiderman_bnd.svg",
+                Reparto = "Tom Holland, Zendaya, Sadie Sink",
+                Imagen = "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=600&auto=format&fit=crop&q=80",
                 Calificacion = 4.9
             },
 
@@ -34,7 +34,7 @@ namespace CINESMART.Data
                 Clasificacion = "16+",
                 Director = "Kane Parsons",
                 Reparto = "Kane Parsons, Mark Higgins, Sarah Paulson",
-                Imagen = "/images/backrooms.svg",
+                Imagen = "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80",
                 Calificacion = 4.7
             },
 
@@ -49,7 +49,7 @@ namespace CINESMART.Data
                 Clasificacion = "PG-13",
                 Director = "Anthony y Joe Russo",
                 Reparto = "Robert Downey Jr., Pedro Pascal, Chris Evans",
-                Imagen = "/images/avengers_doomsday.svg",
+                Imagen = "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
                 Calificacion = 5.0
             },
 
@@ -64,7 +64,7 @@ namespace CINESMART.Data
                 Clasificacion = "ATP",
                 Director = "Byron Howard, Rich Moore",
                 Reparto = "Ginnifer Goodwin, Jason Bateman, Ke Huy Quan",
-                Imagen = "/images/zootopia2.svg",
+                Imagen = "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
                 Calificacion = 4.8
             },
 
@@ -79,12 +79,12 @@ namespace CINESMART.Data
                 Clasificacion = "PG-13",
                 Director = "Christopher Nolan",
                 Reparto = "Matthew McConaughey, Anne Hathaway, Jessica Chastain",
-                Imagen = "/images/interstellar.svg",
+                Imagen = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
                 Calificacion = 4.9
             }
         };
 
-        // 2. Lista de Funciones (Salas simples: Sala 1, Sala 2, Sala 3, Sala 4)
+        // 2. Funciones de Cine (Salas 1, 2, 3, 4)
         public static List<Funcion> Funciones { get; } = new()
         {
             new Funcion { Id = 1, PeliculaId = 1, Fecha = "26/07/2026", Hora = "15:00", Sala = "Sala 1", Precio = 35 },
@@ -97,15 +97,36 @@ namespace CINESMART.Data
             new Funcion { Id = 8, PeliculaId = 5, Fecha = "26/07/2026", Hora = "17:30", Sala = "Sala 1", Precio = 35 }
         };
 
-        // 3. Lista de Combos de Dulcería (Combos sencillos y claros)
+        // 3. Catálogo de Combos con fotos reales de pipocas y refrescos
         public static List<Combo> Combos { get; } = new()
         {
-            new Combo { Id = 1, Nombre = "Combo Individual", Descripcion = "1 Palomita mediana + 1 Gaseosa.", Precio = 20 },
-            new Combo { Id = 2, Nombre = "Combo para Dos", Descripcion = "1 Palomita grande + 2 Gaseosas.", Precio = 35 },
-            new Combo { Id = 3, Nombre = "Combo Familiar", Descripcion = "2 Palomitas grandes + 4 Gaseosas + Nachos con queso.", Precio = 55 }
+            new Combo 
+            { 
+                Id = 1, 
+                Nombre = "Combo Individual", 
+                Descripcion = "1 Pipoca mediana crujiente + 1 Refresco helado de 32oz.", 
+                Precio = 20,
+                Imagen = "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=600&auto=format&fit=crop&q=80"
+            },
+            new Combo 
+            { 
+                Id = 2, 
+                Nombre = "Combo para Dos", 
+                Descripcion = "1 Pipoca grande mantecosa + 2 Refrescos helados a elección.", 
+                Precio = 35,
+                Imagen = "https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=600&auto=format&fit=crop&q=80"
+            },
+            new Combo 
+            { 
+                Id = 3, 
+                Nombre = "Combo Familiar", 
+                Descripcion = "2 Pipocas grandes + 4 Refrescos + Nachos calientes con queso cheddar.", 
+                Precio = 55,
+                Imagen = "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80"
+            }
         };
 
-        // 4. Historial de Reservas en memoria
+        // 4. Reservas de compras
         public static List<Compra> Reservas { get; } = new()
         {
             new Compra
@@ -129,7 +150,7 @@ namespace CINESMART.Data
             }
         };
 
-        // Funciones auxiliares para demostrar programación modular en C#
+        // Funciones modulares
         public static Pelicula? ObtenerPeliculaPorId(int id)
         {
             return Peliculas.FirstOrDefault(p => p.Id == id);

@@ -11,7 +11,5 @@ namespace CINESMART.Models
         public decimal Precio { get; set; }
 
         public string Imagen { get; set; } = "";
-
-        public bool Disponible { get; set; } = true;
     }
 }

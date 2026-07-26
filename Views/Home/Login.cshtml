@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    var error = ViewBag.Error as string;
+}
+
+<section class="page-header">
+    <div class="container text-center">
+        <span class="hero-badge">🔐 MÓDULO DE AUTENTICACIÓN</span>
+        <h1>Iniciar Sesión en CINESMART</h1>
+        <p>Ingresa a tu cuenta para gestionar tus boletos o acceder al panel administrativo.</p>
+    </div>
+</section>
+
+<section class="container py-5" style="max-width: 500px;">
+    <div class="p-4 p-md-5 rounded-4 border border-warning border-opacity-25 shadow-lg" style="background: #12121c;">
+        <div class="text-center mb-4">
+            <span class="fs-1">👤</span>
+            <h3 class="text-gold mt-2">Acceso de Usuario</h3>
+        </div>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <div class="alert alert-danger text-center p-3 rounded-3 mb-4">
+                <small class="d-block font-weight-bold">❌ Error:</small>
+                <span>@error</span>
+            </div>
+        }
+
+        <form asp-controller="Home" asp-action="Login" method="post">
+            <div class="mb-3">
+                <label for="usuario" class="form-label text-light">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" class="form-control custom-input fs-5" placeholder="Ej. kevin o admin" required />
+            </div>
+
+            <div class="mb-4">
+                <label for="clave" class="form-label text-light">Contraseña:</label>
+                <input type="password" id="clave" name="clave" class="form-control custom-input fs-5" placeholder="••••••••" required />
+            </div>
+
+            <button type="submit" class="btn-glow-gold w-100 py-3 fs-5 font-weight-bold mb-3">
+                🔑 Iniciar Sesión
+            </button>
+        </form>
+
+        <div class="p-3 rounded-3 bg-dark border border-secondary text-center">
+            <small class="text-muted d-block">💡 Cuentas de demostración para evaluación:</small>
+            <span class="text-gold small d-block">Usuario Estudiante: <code>kevin</code> | Clave: <code>1234</code></span>
+            <span class="text-info small d-block">Usuario Admin: <code>admin</code> | Clave: <code>1234</code></span>
+        </div>
+    </div>
+</section>
