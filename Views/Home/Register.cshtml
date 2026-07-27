@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Crear Cuenta";
+    var error = ViewBag.Error as string;
+}
+
+<section class="page-header">
+    <div class="container text-center py-4">
+        <span class="hero-badge">📝 REGISTRO DE USUARIO</span>
+        <h1 class="hero-title">Crear Cuenta en <span class="text-gold">CINESMART</span></h1>
+        <p class="hero-description">Regístrate para reservar entradas, combos de dulcería y disfrutar la cartelera de cine.</p>
+    </div>
+</section>
+
+<section class="container py-5" style="max-width: 520px;">
+    <div class="purchase-form-card shadow-lg">
+        <div class="text-center mb-4">
+            <span class="fs-1">👤✨</span>
+            <h3 class="text-gold mt-2">Nueva Cuenta de Cliente</h3>
+        </div>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <div class="alert alert-danger text-center p-3 rounded-3 mb-4 border border-danger">
+                <small class="d-block font-weight-bold mb-1">❌ Error de registro:</small>
+                <span>@error</span>
+            </div>
+        }
+
+        <form asp-controller="Home" asp-action="Register" method="post">
+            <div class="mb-3">
+                <label for="nombre" class="form-label text-light font-weight-bold">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control custom-input" placeholder="Ej. Juan Pérez" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="correo" class="form-label text-light font-weight-bold">Correo electrónico:</label>
+                <input type="email" id="correo" name="correo" class="form-control custom-input" placeholder="ejemplo@correo.com" required />
+            </div>
+
+            <div class="mb-4">
+                <label for="clave" class="form-label text-light font-weight-bold">Contraseña:</label>
+                <input type="password" id="clave" name="clave" class="form-control custom-input" placeholder="••••••••" required />
+            </div>
+
+            <button type="submit" class="btn-glow-gold w-100 py-3 fs-5 font-weight-bold mb-3 border-0">
+                ✨ Crear Cuenta
+            </button>
+        </form>
+
+        <div class="text-center my-3">
+            <p class="mb-0 text-light">
+                ¿Ya tienes una cuenta? 
+                <a asp-controller="Home" asp-action="Login" class="text-gold font-weight-bold text-decoration-none">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+</section>

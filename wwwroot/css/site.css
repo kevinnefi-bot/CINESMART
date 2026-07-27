@@ -492,20 +492,54 @@ h1, h2, h3, h4, h5, h6 {
 .btn-print { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border-color); color: #fff !important; padding: 0.75rem 1.4rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
 .btn-back { background: var(--primary-gold); color: #000 !important; padding: 0.75rem 1.4rem; border-radius: 12px; font-weight: 800; text-decoration: none; }
 
-/* FOOTER */
-.cinema-footer { background: #06060a; border-top: 1px solid var(--border-color); padding: 3.5rem 0; margin-top: 4rem; }
-.footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
-.cinema-footer h3 span { color: var(--primary-gold); }
-.footer-links ul { list-style: none; padding: 0; }
-.footer-links li { margin-bottom: 0.6rem; }
-.footer-links a { color: #cbd5e1 !important; text-decoration: none; }
-.footer-links a:hover { color: var(--primary-gold) !important; }
-.footer-copy { color: #cbd5e1 !important; font-size: 0.88rem; }
+/* FOOTER & SOCIAL ICONS */
+.cinema-footer { 
+    background: #050508; 
+    border-top: 1px solid var(--border-color); 
+    padding: 3.5rem 0 2rem; 
+    margin-top: 5rem; 
+}
+
+.cinema-footer h3 span { 
+    color: var(--primary-gold); 
+}
+
+.footer-menu a {
+    color: #cbd5e1 !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.footer-menu a:hover {
+    color: var(--primary-gold) !important;
+    padding-left: 4px;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: #ffffff !important;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-btn:hover {
+    background: var(--primary-gold);
+    color: #000000 !important;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 6px 20px var(--gold-glow);
+}
 
 @media (max-width: 768px) {
     .movie-horizontal-card { flex-direction: column; }
-    .poster-box { width: 100%; min-width: 100%; height: 240px; }
-    .footer-content { grid-template-columns: 1fr; }
+    .poster-box { width: 100%; min-width: 100%; height: 260px; }
     .ticket-details-grid { grid-template-columns: 1fr; }
     .seat-btn { width: 45px; height: 42px; font-size: 0.95rem; }
 }

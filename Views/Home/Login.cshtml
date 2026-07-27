@@ -4,15 +4,15 @@
 }
 
 <section class="page-header">
-    <div class="container text-center">
+    <div class="container text-center py-4">
         <span class="hero-badge">🔐 MÓDULO DE AUTENTICACIÓN</span>
-        <h1>Iniciar Sesión en CINESMART</h1>
-        <p>Ingresa a tu cuenta para gestionar tus boletos o acceder al panel administrativo.</p>
+        <h1 class="hero-title">Iniciar Sesión en <span class="text-gold">CINESMART</span></h1>
+        <p class="hero-description">Ingresa a tu cuenta para gestionar tus boletos o acceder al panel administrativo.</p>
     </div>
 </section>
 
-<section class="container py-5" style="max-width: 500px;">
-    <div class="p-4 p-md-5 rounded-4 border border-warning border-opacity-25 shadow-lg" style="background: #12121c;">
+<section class="container py-5" style="max-width: 520px;">
+    <div class="purchase-form-card shadow-lg">
         <div class="text-center mb-4">
             <span class="fs-1">👤</span>
             <h3 class="text-gold mt-2">Acceso de Usuario</h3>
@@ -20,32 +20,40 @@
 
         @if (!string.IsNullOrEmpty(error))
         {
-            <div class="alert alert-danger text-center p-3 rounded-3 mb-4">
-                <small class="d-block font-weight-bold">❌ Error:</small>
+            <div class="alert alert-danger text-center p-3 rounded-3 mb-4 border border-danger">
+                <small class="d-block font-weight-bold mb-1">❌ Error de inicio de sesión:</small>
                 <span>@error</span>
             </div>
         }
 
         <form asp-controller="Home" asp-action="Login" method="post">
             <div class="mb-3">
-                <label for="usuario" class="form-label text-light">Usuario:</label>
-                <input type="text" id="usuario" name="usuario" class="form-control custom-input fs-5" placeholder="Ej. kevin o admin" required />
+                <label for="correo" class="form-label text-light font-weight-bold">Correo electrónico / Usuario:</label>
+                <input type="text" id="correo" name="correo" class="form-control custom-input" placeholder="admin@cinesmart.com o tu@correo.com" required />
             </div>
 
             <div class="mb-4">
-                <label for="clave" class="form-label text-light">Contraseña:</label>
-                <input type="password" id="clave" name="clave" class="form-control custom-input fs-5" placeholder="••••••••" required />
+                <label for="clave" class="form-label text-light font-weight-bold">Contraseña:</label>
+                <input type="password" id="clave" name="clave" class="form-control custom-input" placeholder="••••••••" required />
             </div>
 
-            <button type="submit" class="btn-glow-gold w-100 py-3 fs-5 font-weight-bold mb-3">
+            <button type="submit" class="btn-glow-gold w-100 py-3 fs-5 font-weight-bold mb-3 border-0">
                 🔑 Iniciar Sesión
             </button>
         </form>
 
-        <div class="p-3 rounded-3 bg-dark border border-secondary text-center">
-            <small class="text-muted d-block">💡 Cuentas de demostración para evaluación:</small>
-            <span class="text-gold small d-block">Usuario Estudiante: <code>kevin</code> | Clave: <code>1234</code></span>
-            <span class="text-info small d-block">Usuario Admin: <code>admin</code> | Clave: <code>1234</code></span>
+        <div class="text-center my-3">
+            <p class="mb-0 text-light">
+                ¿No tienes una cuenta? 
+                <a asp-controller="Home" asp-action="Register" class="text-gold font-weight-bold text-decoration-none">Regístrate aquí</a>
+            </p>
+        </div>
+
+        <div class="p-3 rounded-3 bg-dark border border-secondary text-center mt-4">
+            <small class="text-muted d-block mb-1">💡 Credenciales de demostración:</small>
+            <span class="text-gold small d-block">Admin: <code>admin@cinesmart.com</code> | Clave: <code>admin123</code></span>
+            <span class="text-gold small d-block">Admin UPDS: <code>upds1234</code> | Clave: <code>1234</code></span>
+            <span class="text-info small d-block">Cliente: <code>kevin@correo.com</code> | Clave: <code>1234</code></span>
         </div>
     </div>
 </section>

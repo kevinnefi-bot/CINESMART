@@ -6,66 +6,92 @@
 }
 
 <section class="page-header">
-    <div class="container text-center">
-        <span class="hero-badge">🎬 FICHA TÉCNICA DE PELÍCULA</span>
-        <h1>@Model.Titulo</h1>
-        <p>Conoce los detalles, elenco, sinopsis completa y horarios disponibles.</p>
+    <div class="container text-center py-4">
+        <span class="hero-badge">
+            <i class="bi bi-film me-1"></i> FICHA TÉCNICA DE PELÍCULA
+        </span>
+        <h1 class="hero-title">@Model.Titulo</h1>
+        <p class="hero-description">Conoce los detalles, elenco, sinopsis completa y horarios disponibles.</p>
     </div>
 </section>
 
 <section class="container py-5">
-    <div class="movie-details-hero p-4 p-md-5 rounded-4 border border-warning border-opacity-25" style="background: #12121c; box-shadow: 0 15px 40px rgba(0,0,0,0.7);">
+    <div class="purchase-form-card shadow-lg p-4 p-md-5">
         <div class="row g-4 align-items-center">
             <div class="col-md-4 text-center">
-                <img src="@Model.Imagen" alt="@Model.Titulo" class="img-fluid rounded-4 shadow-lg border border-secondary" style="max-height: 460px; width: 100%; object-fit: cover;" />
+                <div class="position-relative overflow-hidden rounded-4 shadow-lg border border-secondary border-opacity-25">
+                    <img src="@Model.Imagen" alt="Poster de @Model.Titulo" class="img-fluid w-100" style="max-height: 480px; object-fit: cover;" />
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="d-flex align-items-center gap-2 flex-wrap mb-3">
-                    <span class="genre-tag fs-6">@Model.Genero</span>
-                    <span class="badge bg-warning text-dark font-weight-bold fs-6">⭐ @Model.Calificacion / 5.0</span>
-                    <span class="badge bg-dark border border-secondary text-light fs-6">🔞 @Model.Clasificacion</span>
-                    <span class="badge bg-dark border border-secondary text-light fs-6">⏱️ @Model.Duracion</span>
+                    <span class="genre-tag fs-6">
+                        <i class="bi bi-tag-fill me-1"></i> @Model.Genero
+                    </span>
+                    <span class="badge bg-warning text-dark font-weight-bold fs-6 px-3 py-2">
+                        <i class="bi bi-star-fill me-1"></i> @Model.Calificacion / 5.0
+                    </span>
+                    <span class="badge bg-dark border border-secondary text-light fs-6 px-3 py-2">
+                        <i class="bi bi-shield-exclamation me-1"></i> @Model.Clasificacion
+                    </span>
+                    <span class="badge bg-dark border border-secondary text-light fs-6 px-3 py-2">
+                        <i class="bi bi-clock me-1"></i> @Model.Duracion
+                    </span>
                 </div>
 
                 <h2 class="display-6 font-weight-bold text-gold mb-3">@Model.Titulo</h2>
 
-                <!-- Sinopsis con alta legibilidad y texto blanco super claro -->
-                <div class="p-3 rounded-3 mb-4" style="background: rgba(0, 0, 0, 0.4); border-left: 4px solid var(--primary-gold);">
-                    <h5 class="text-gold mb-2 font-weight-bold">📖 Sinopsis Completa:</h5>
-                    <p style="color: #ffffff; font-size: 1.08rem; line-height: 1.7; margin: 0; font-weight: 400;">
+                <!-- Sinopsis -->
+                <div class="p-4 rounded-4 mb-4 border border-warning border-opacity-25" style="background: rgba(0, 0, 0, 0.4); border-left: 4px solid var(--primary-gold) !important;">
+                    <h5 class="text-gold mb-2 font-weight-bold">
+                        <i class="bi bi-journal-text me-1"></i> Sinopsis Completa:
+                    </h5>
+                    <p class="text-light fs-6 leading-relaxed mb-0">
                         @Model.SinopsisCompleta
                     </p>
                 </div>
 
-                <div class="row g-3 mb-4 p-3 rounded-3" style="background: rgba(255,255,255,0.04);">
+                <div class="row g-3 mb-4 p-3 rounded-3 border border-secondary border-opacity-25" style="background: rgba(255,255,255,0.03);">
                     <div class="col-sm-6">
                         <span class="text-muted d-block small">Director:</span>
-                        <strong class="text-light fs-6">🎬 @Model.Director</strong>
+                        <strong class="text-light fs-6">
+                            <i class="bi bi-camera-reels text-gold me-1"></i> @Model.Director
+                        </strong>
                     </div>
                     <div class="col-sm-6">
                         <span class="text-muted d-block small">Reparto Principal:</span>
-                        <strong class="text-light fs-6">🎭 @Model.Reparto</strong>
+                        <strong class="text-light fs-6">
+                            <i class="bi bi-people text-gold me-1"></i> @Model.Reparto
+                        </strong>
                     </div>
                 </div>
 
-                <!-- Funciones disponibles (Salas simples: Sala 1, Sala 2, etc.) -->
-                <h5 class="text-light mb-3 font-weight-bold">📅 Horarios y Salas Disponibles:</h5>
+                <!-- Funciones disponibles -->
+                <h5 class="text-light mb-3 font-weight-bold">
+                    <i class="bi bi-calendar-event text-gold me-1"></i> Horarios y Salas Disponibles:
+                </h5>
                 <div class="d-flex flex-wrap gap-3 mb-4">
                     @if (funciones != null && funciones.Any())
                     {
                         foreach (var f in funciones)
                         {
-                            <div class="p-3 rounded-3 border border-secondary text-center" style="background: #09090e; min-width: 130px;">
-                                <span class="text-gold font-weight-bold d-block">📍 @f.Sala</span>
-                                <strong class="text-light fs-5">🕒 @f.Hora</strong>
-                                <span class="text-success d-block small font-weight-bold">Bs. @f.Precio</span>
+                            <div class="p-3 rounded-3 border border-secondary border-opacity-25 text-center shadow-sm" style="background: #09090e; min-width: 140px;">
+                                <span class="text-gold font-weight-bold d-block small">
+                                    <i class="bi bi-geo-alt-fill me-1"></i> @f.Sala
+                                </span>
+                                <strong class="text-light fs-5 d-block my-1">
+                                    <i class="bi bi-clock-history me-1"></i> @f.Hora
+                                </strong>
+                                <span class="text-success d-block small font-weight-bold">
+                                    Bs. @f.Precio.ToString("F2")
+                                </span>
                             </div>
                         }
                     }
                 </div>
 
-                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@Model.Id" class="btn-glow-gold d-inline-block text-center fs-5 px-4 py-3 w-100 w-md-auto">
-                    🎟️ Comprar Boletos para esta Película
+                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@Model.Id" class="btn-glow-gold d-inline-block text-center fs-5 px-4 py-3 w-100 border-0 text-dark font-weight-bold text-decoration-none rounded-3">
+                    <i class="bi bi-ticket-detailed-fill me-2"></i> Comprar Boletos para esta Película
                 </a>
             </div>
         </div>

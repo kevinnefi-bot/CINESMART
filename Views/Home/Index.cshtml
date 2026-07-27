@@ -6,31 +6,37 @@
 
 <section class="hero-banner">
     <div class="hero-overlay"></div>
-    <div class="container hero-content text-center">
-        <span class="hero-badge">🍿 ESTRENOS 2026</span>
-        <h1 class="hero-title">Vive la Magia del Cine en <span class="text-gold">CINESMART</span></h1>
+    <div class="container hero-content text-center py-5">
+        <span class="hero-badge">
+            <i class="bi bi-stars text-gold me-1"></i> ESTRENOS 2026
+        </span>
+        <h1 class="hero-title">Vive el Cine como Nunca Antes en <span class="text-gold">CINESMART</span></h1>
         <p class="hero-description">
-            Elige tu película preferida, selecciona tus asientos e incluye tus combos de dulcería favoritos.
+            Elige tu película preferida, selecciona tus asientos numerados e incluye tus combos de dulcería favoritos en un solo clic.
         </p>
-        <div class="hero-buttons">
+        <div class="hero-buttons d-flex justify-content-center gap-3">
             <a asp-controller="Home" asp-action="Cartelera" class="btn-glow-gold">
-                🎬 Ver Cartelera Completa
+                <i class="bi bi-film me-2"></i> Ver Cartelera Completa
             </a>
             <a asp-controller="Home" asp-action="Combos" class="btn-glass">
-                🍿 Ver Combos
+                <i class="bi bi-cup-straw me-2"></i> Ver Combos
             </a>
         </div>
     </div>
 </section>
 
-<!-- Películas Destacadas (Hacer clic en la tarjeta navega a Detalles) -->
+<!-- Películas Destacadas -->
 <section class="featured-section container py-5">
-    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <span class="sub-title">EN PANTALLA GRANDE</span>
-            <h2 class="section-title">Películas Destacadas</h2>
+            <span class="sub-title text-gold font-weight-bold text-uppercase tracking-wider">
+                <i class="bi bi-camera-reels me-1"></i> EN PANTALLA GRANDE
+            </span>
+            <h2 class="section-title h1 font-weight-bold mb-0">Películas Destacadas</h2>
         </div>
-        <a asp-controller="Home" asp-action="Cartelera" class="view-all-link">Ver todas las películas &rarr;</a>
+        <a asp-controller="Home" asp-action="Cartelera" class="btn-glass text-gold font-weight-bold text-decoration-none border border-warning border-opacity-25 rounded-3 px-3 py-2">
+            Ver todas las películas <i class="bi bi-arrow-right ms-1"></i>
+        </a>
     </div>
 
     <div class="row g-4">
@@ -39,58 +45,74 @@
             @foreach (var pelicula in Model)
             {
                 <div class="col-lg-4 col-md-6">
-                    <!-- Al hacer clic en cualquier parte de la tarjeta se entra al subprograma de Detalles -->
-                    <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="movie-card-link text-decoration-none">
-                        <div class="movie-card-modern">
-                            <div class="poster-wrapper">
-                                <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-img" />
-                                <span class="badge-rating">⭐ @pelicula.Calificacion</span>
-                                <span class="badge-duration">⏱️ @pelicula.Duracion</span>
-                            </div>
-                            <div class="movie-card-body">
-                                <span class="genre-tag">@pelicula.Genero</span>
-                                <h3 class="movie-card-title text-light">@pelicula.Titulo</h3>
-                                <p class="movie-card-desc">@pelicula.Descripcion</p>
-                                <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <span class="text-gold font-weight-bold">Ver Detalles &rarr;</span>
-                                    <span class="btn-card-buy-sm">🎟️ Comprar</span>
-                                </div>
+                    <div class="movie-card-modern shadow-lg">
+                        <div class="poster-wrapper position-relative">
+                            <img src="@pelicula.Imagen" alt="Poster de @pelicula.Titulo" class="movie-poster-img" />
+                            <span class="badge-rating">
+                                <i class="bi bi-star-fill text-warning me-1"></i> @pelicula.Calificacion
+                            </span>
+                            <span class="badge-duration">
+                                <i class="bi bi-clock me-1"></i> @pelicula.Duracion
+                            </span>
+                        </div>
+                        <div class="movie-card-body p-4 d-flex flex-column">
+                            <span class="genre-tag mb-1">
+                                <i class="bi bi-tag-fill me-1"></i> @pelicula.Genero
+                            </span>
+                            <h3 class="movie-card-title text-light h4 font-weight-bold">@pelicula.Titulo</h3>
+                            <p class="movie-card-desc text-muted mb-4">@pelicula.Descripcion</p>
+                            
+                            <div class="mt-auto d-flex justify-content-between align-items-center gap-2 pt-3 border-top border-secondary border-opacity-25">
+                                <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn-glass py-2 px-3 fs-6 flex-grow-1 text-center">
+                                    <i class="bi bi-info-circle me-1"></i> Detalles
+                                </a>
+                                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-glow-gold py-2 px-3 fs-6 flex-grow-1 text-center border-0 text-dark">
+                                    <i class="bi bi-ticket-perforated-fill me-1"></i> Comprar
+                                </a>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             }
         }
     </div>
 </section>
 
-<!-- Sección de Beneficios -->
-<section class="features-section py-5">
-    <div class="container">
+<!-- Sección de Beneficios / Experiencia -->
+<section class="features-section py-5 my-4" style="background: rgba(20, 20, 36, 0.4); border-y: 1px solid rgba(255,255,255,0.05);">
+    <div class="container py-3">
         <div class="text-center mb-5">
-            <span class="sub-title">EXPERIENCIA CINESMART</span>
-            <h2 class="section-title">¿Cómo funciona?</h2>
+            <span class="sub-title text-gold font-weight-bold text-uppercase tracking-wider">
+                <i class="bi bi-shield-check me-1"></i> EXPERIENCIA CINESMART
+            </span>
+            <h2 class="section-title h1 font-weight-bold">¿Cómo funciona tu compra?</h2>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="feature-box">
-                    <div class="feature-icon-wrapper">🎬</div>
-                    <h4>1. Elige tu Película</h4>
-                    <p>Explora la cartelera y conoce la sinopsis completa y elenco de cada película.</p>
+                <div class="feature-box p-4 rounded-4 text-center border border-secondary border-opacity-25 h-100" style="background: var(--bg-card);">
+                    <div class="feature-icon-wrapper fs-1 text-gold mb-3">
+                        <i class="bi bi-film"></i>
+                    </div>
+                    <h4 class="text-light font-weight-bold">1. Elige tu Película</h4>
+                    <p class="text-muted">Explora la cartelera interactiva, consulta horarios, clasificación y reparto antes de reservar.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="feature-box">
-                    <div class="feature-icon-wrapper">💺</div>
-                    <h4>2. Selecciona Asientos</h4>
-                    <p>Escoge tu horario y selecciona tus asientos preferidos en tiempo real.</p>
+                <div class="feature-box p-4 rounded-4 text-center border border-secondary border-opacity-25 h-100" style="background: var(--bg-card);">
+                    <div class="feature-icon-wrapper fs-1 text-gold mb-3">
+                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                    </div>
+                    <h4 class="text-light font-weight-bold">2. Selecciona Asientos</h4>
+                    <p class="text-muted">Escoge tu sala y selecciona tus asientos numerados en un mapa visual en tiempo real.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="feature-box">
-                    <div class="feature-icon-wrapper">🍿</div>
-                    <h4>3. Agrega tus Combos</h4>
-                    <p>Acompaña tu boleto con combos individuales, en pareja o familiares.</p>
+                <div class="feature-box p-4 rounded-4 text-center border border-secondary border-opacity-25 h-100" style="background: var(--bg-card);">
+                    <div class="feature-icon-wrapper fs-1 text-gold mb-3">
+                        <i class="bi bi-cup-straw"></i>
+                    </div>
+                    <h4 class="text-light font-weight-bold">3. Agrega tus Combos</h4>
+                    <p class="text-muted">Acompaña tu entrada con pipocas, refrescos y snacks con confirmación y código QR.</p>
                 </div>
             </div>
         </div>

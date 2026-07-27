@@ -8,10 +8,12 @@
 }
 
 <section class="page-header">
-    <div class="container text-center">
-        <span class="hero-badge">📊 SUBPROGRAMA DE ADMINISTRACIÓN</span>
-        <h1>Panel de Ventas & Reservas</h1>
-        <p>Módulo interno para supervisar ingresos, boletos vendidos y compras registradas.</p>
+    <div class="container text-center py-4">
+        <span class="hero-badge">
+            <i class="bi bi-shield-lock-fill me-1"></i> SUBPROGRAMA DE ADMINISTRACIÓN
+        </span>
+        <h1 class="hero-title">Panel de <span class="text-gold">Ventas & Reservas</span></h1>
+        <p class="hero-description">Módulo interno para supervisar ingresos, boletos vendidos y compras registradas.</p>
     </div>
 </section>
 
@@ -19,41 +21,52 @@
     <!-- Tarjetas de Estadísticas -->
     <div class="row g-4 mb-5">
         <div class="col-md-4">
-            <div class="p-4 rounded-4 text-center border border-success" style="background: rgba(16, 185, 129, 0.1);">
-                <span class="fs-1">💰</span>
-                <span class="text-muted d-block mt-2">Total Recaudado</span>
+            <div class="p-4 rounded-4 text-center border border-success border-opacity-50 shadow-lg" style="background: rgba(16, 185, 129, 0.08);">
+                <div class="fs-1 text-success mb-2">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+                <span class="text-muted d-block font-weight-bold">Total Recaudado</span>
                 <h2 class="text-success font-weight-bold mb-0">Bs. @totalRecaudado.ToString("F2")</h2>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="p-4 rounded-4 text-center border border-warning" style="background: rgba(245, 158, 11, 0.1);">
-                <span class="fs-1">🎟️</span>
-                <span class="text-muted d-block mt-2">Boletos Vendidos</span>
+            <div class="p-4 rounded-4 text-center border border-warning border-opacity-50 shadow-lg" style="background: rgba(245, 158, 11, 0.08);">
+                <div class="fs-1 text-warning mb-2">
+                    <i class="bi bi-ticket-perforated-fill"></i>
+                </div>
+                <span class="text-muted d-block font-weight-bold">Boletos Vendidos</span>
                 <h2 class="text-gold font-weight-bold mb-0">@totalBoletos boletos</h2>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="p-4 rounded-4 text-center border border-info" style="background: rgba(56, 189, 248, 0.1);">
-                <span class="fs-1">📋</span>
-                <span class="text-muted d-block mt-2">Total Transacciones</span>
+            <div class="p-4 rounded-4 text-center border border-info border-opacity-50 shadow-lg" style="background: rgba(56, 189, 248, 0.08);">
+                <div class="fs-1 text-info mb-2">
+                    <i class="bi bi-receipt-cutoff"></i>
+                </div>
+                <span class="text-muted d-block font-weight-bold">Total Transacciones</span>
                 <h2 class="text-info font-weight-bold mb-0">@totalReservas compras</h2>
             </div>
         </div>
     </div>
 
     <!-- Tabla de Ventas -->
-    <div class="p-4 rounded-4 border border-secondary" style="background: var(--bg-card);">
-        <h3 class="mb-4 text-light">📜 Historial de Boletos Emitidos</h3>
+    <div class="purchase-form-card shadow-lg">
+        <h3 class="mb-4 text-light font-weight-bold d-flex align-items-center">
+            <i class="bi bi-clock-history text-gold me-2"></i> Historial de Boletos Emitidos
+        </h3>
         @if (Model == null || !Model.Any())
         {
-            <p class="text-muted">Aún no hay compras registradas en el sistema.</p>
+            <div class="text-center py-4 text-muted">
+                <i class="bi bi-inbox fs-2 mb-2 d-block text-secondary"></i>
+                Aún no hay compras registradas en el sistema.
+            </div>
         }
         else
         {
             <div class="table-responsive">
-                <table class="table table-dark table-hover align-middle">
+                <table class="table table-dark table-hover align-middle border border-secondary border-opacity-25 rounded-3">
                     <thead>
-                        <tr class="table-secondary text-dark">
+                        <tr class="table-secondary text-dark font-weight-bold">
                             <th>Código</th>
                             <th>Cliente</th>
                             <th>Correo</th>
@@ -68,7 +81,7 @@
                         @foreach (var r in Model)
                         {
                             <tr>
-                                <td><code class="text-gold">@r.CodigoReserva</code></td>
+                                <td><code class="text-gold font-weight-bold">@r.CodigoReserva</code></td>
                                 <td><strong>@r.Cliente</strong></td>
                                 <td class="text-muted">@r.Correo</td>
                                 <td>@r.Pelicula</td>

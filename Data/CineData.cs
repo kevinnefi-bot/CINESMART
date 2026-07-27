@@ -10,7 +10,8 @@ namespace CINESMART.Data
         public static List<Usuario> Usuarios { get; } = new()
         {
             new Usuario { Id = 1, Nombre = "Administrador", Correo = "admin@cinesmart.com", Clave = "admin123", Rol = "admin" },
-            new Usuario { Id = 2, Nombre = "Kevin Balcazar", Correo = "kevin@correo.com", Clave = "1234", Rol = "cliente" }
+            new Usuario { Id = 2, Nombre = "Administrador UPDS", Correo = "upds1234", Clave = "1234", Rol = "admin" },
+            new Usuario { Id = 3, Nombre = "Kevin Balcazar", Correo = "kevin@correo.com", Clave = "1234", Rol = "cliente" }
         };
 
         // ==========================================
@@ -29,7 +30,7 @@ namespace CINESMART.Data
                 Clasificacion = "PG-13",
                 Director = "Destin Daniel Cretton",
                 Reparto = "Tom Holland, Zendaya, Sadie Sink",
-                Imagen = "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+                Imagen = "/images/spiderman_bnd.svg",
                 Calificacion = 4.9
             },
             new Pelicula
@@ -43,7 +44,7 @@ namespace CINESMART.Data
                 Clasificacion = "16+",
                 Director = "Kane Parsons",
                 Reparto = "Kane Parsons, Mark Higgins, Sarah Paulson",
-                Imagen = "https://image.tmdb.org/t/p/w500/jDPSmMFv95GsJtfXAMkufLNPhOw.jpg",
+                Imagen = "/images/backrooms.svg",
                 Calificacion = 4.7
             },
             new Pelicula
@@ -57,7 +58,7 @@ namespace CINESMART.Data
                 Clasificacion = "PG-13",
                 Director = "Anthony y Joe Russo",
                 Reparto = "Robert Downey Jr., Pedro Pascal, Chris Evans",
-                Imagen = "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDhRDJsR3OTnMKm.jpg",
+                Imagen = "/images/avengers_doomsday.svg",
                 Calificacion = 5.0
             },
             new Pelicula
@@ -71,7 +72,7 @@ namespace CINESMART.Data
                 Clasificacion = "ATP",
                 Director = "Byron Howard, Rich Moore",
                 Reparto = "Ginnifer Goodwin, Jason Bateman, Ke Huy Quan",
-                Imagen = "https://image.tmdb.org/t/p/w500/8fYluTtB3b3BKOkNYMqvgEFqFnR.jpg",
+                Imagen = "/images/zootopia2.svg",
                 Calificacion = 4.8
             },
             new Pelicula
@@ -85,7 +86,7 @@ namespace CINESMART.Data
                 Clasificacion = "PG-13",
                 Director = "Christopher Nolan",
                 Reparto = "Matthew McConaughey, Anne Hathaway, Jessica Chastain",
-                Imagen = "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+                Imagen = "/images/interstellar.svg",
                 Calificacion = 4.9
             }
         };

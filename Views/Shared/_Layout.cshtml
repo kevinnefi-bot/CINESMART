@@ -12,56 +12,85 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap & Custom CSS -->
+    <!-- Bootstrap CSS & Bootstrap Icons -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg cinema-navbar">
             <div class="container">
-                <a class="navbar-brand cinema-logo" asp-controller="Home" asp-action="Index">
-                    <span class="logo-icon">🎬</span> <span class="logo-text">CINE<span class="highlight">SMART</span></span>
+                <a class="navbar-brand cinema-logo d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-film text-gold me-2 fs-3"></i> 
+                    <span class="logo-text">CINE<span class="highlight">SMART</span></span>
                 </a>
-                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mainNavigation">
-                    <ul class="navbar-nav ms-auto align-items-center">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">🏠 Inicio</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door-fill text-gold me-1"></i> Inicio
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Cartelera">🎬 Cartelera</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Cartelera">
+                                <i class="bi bi-film me-1"></i> Cartelera
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Combos">🍿 Combos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Admin">📊 Panel Admin</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Combos">
+                                <i class="bi bi-cup-straw me-1"></i> Combos
+                            </a>
                         </li>
 
                         @{
                             var usuario = Context.Session.GetString("Usuario");
+                            var rol = Context.Session.GetString("Rol");
                         }
+
+                        @if (rol == "admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-warning font-weight-bold" asp-controller="Home" asp-action="Admin">
+                                    <i class="bi bi-speedometer2 me-1"></i> Panel Admin
+                                </a>
+                            </li>
+                        }
+
                         @if (!string.IsNullOrEmpty(usuario))
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-gold font-weight-bold">👤 @usuario</span>
+                                <span class="nav-link text-gold font-weight-bold">
+                                    <i class="bi bi-person-circle me-1"></i> @usuario
+                                </span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" asp-controller="Home" asp-action="CerrarSesion">Salir</a>
+                                <a class="nav-link text-danger" asp-controller="Home" asp-action="CerrarSesion">
+                                    <i class="bi bi-box-arrow-right me-1"></i> Salir
+                                </a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Login">🔑 Iniciar Sesión</a>
+                                <a class="nav-link" asp-controller="Home" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Register">
+                                    <i class="bi bi-person-plus-fill me-1"></i> Registrarse
+                                </a>
                             </li>
                         }
 
-                        <li class="nav-item ms-lg-2">
-                            <a class="nav-link nav-btn-buy" asp-controller="Home" asp-action="Comprar">🎟️ Comprar entradas</a>
+                        <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                            <a class="nav-link nav-btn-buy px-3 py-2 rounded-3" asp-controller="Home" asp-action="Comprar">
+                                <i class="bi bi-ticket-detailed-fill me-1"></i> Comprar entradas
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -75,24 +104,60 @@
 
     <footer class="cinema-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>🎬 CINE<span>SMART</span></h3>
-                    <p>La mejor experiencia cinematográfica al alcance de un clic.</p>
+            <div class="row g-4 justify-content-between align-items-start">
+                <div class="col-lg-5 col-md-6">
+                    <div class="footer-brand mb-3">
+                        <h3 class="d-flex align-items-center">
+                            <i class="bi bi-film text-gold me-2"></i> CINE<span>SMART</span>
+                        </h3>
+                        <p class="text-muted mt-2">
+                            La mejor experiencia cinematográfica al alcance de un clic. Reserva tus películas, asientos y combos con la mejor comodidad.
+                        </p>
+                    </div>
+                    <!-- Redes Sociales -->
+                    <div class="social-links-section">
+                        <h6 class="text-gold font-weight-bold mb-2">Síguenos en nuestras redes</h6>
+                        <div class="d-flex gap-3 social-icons">
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="TikTok">
+                                <i class="bi bi-tiktok"></i>
+                            </a>
+                            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <h5>Navegación</h5>
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Cartelera">Películas en Cartelera</a></li>
-                        <li><a asp-controller="Home" asp-action="Combos">Combos de Pipocas</a></li>
-                        <li><a asp-controller="Home" asp-action="Login">Iniciar Sesión</a></li>
-                        <li><a asp-controller="Home" asp-action="Admin">Panel Administrativo</a></li>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-3 font-weight-bold">Navegación Rápida</h5>
+                    <ul class="list-unstyled footer-menu">
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Index"><i class="bi bi-chevron-right text-gold small me-1"></i> Inicio</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Cartelera"><i class="bi bi-chevron-right text-gold small me-1"></i> Películas en Cartelera</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Combos"><i class="bi bi-chevron-right text-gold small me-1"></i> Combos de Dulcería</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Login"><i class="bi bi-chevron-right text-gold small me-1"></i> Acceso / Iniciar Sesión</a></li>
                     </ul>
                 </div>
-                <div class="footer-copy">
-                    <p>© 2026 CINESMART Inc.</p>
-                    <p>Proyecto C# ASP.NET Core MVC</p>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="academic-badge-box p-3 rounded-4 border border-warning border-opacity-25" style="background: rgba(245, 158, 11, 0.05);">
+                        <span class="badge bg-warning text-dark mb-2 px-3 py-1 font-weight-bold">PROYECTO ACADÉMICO</span>
+                        <h6 class="text-gold font-weight-bold mb-1">Grupo 1 — Programación 1</h6>
+                        <p class="small text-muted mb-0">Sistema Web de Gestión de Cine desarrollado en ASP.NET Core MVC con C#.</p>
+                    </div>
                 </div>
+            </div>
+
+            <hr class="my-4 border-secondary opacity-25" />
+
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+                <p class="small text-muted mb-0">© 2026 CINESMART Inc. Todos los derechos reservados.</p>
+                <p class="small text-gold mb-0">Desarrollado por Grupo 1 — Programación 1</p>
             </div>
         </div>
     </footer>

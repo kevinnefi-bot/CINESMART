@@ -159,7 +159,7 @@ namespace CINESMART.Controllers
         public IActionResult CerrarSesion()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
         // 11. Registro (GET)

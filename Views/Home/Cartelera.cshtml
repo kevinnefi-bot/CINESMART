@@ -6,18 +6,30 @@
 }
 
 <section class="page-header">
-    <div class="container text-center">
-        <span class="hero-badge">🎬 CARTELERA OFICIAL</span>
-        <h1>Cartelera de Cine</h1>
-        <p>Toca cualquier película para conocer su sinopsis, reparto y horarios disponibles.</p>
+    <div class="container text-center py-4">
+        <span class="hero-badge">
+            <i class="bi bi-film me-1"></i> CARTELERA OFICIAL
+        </span>
+        <h1 class="hero-title">Cartelera de <span class="text-gold">Cine</span></h1>
+        <p class="hero-description">Explora los títulos disponibles, consulta sinopsis y adquiere tus boletos en linea.</p>
         
         <!-- Filtros por Género -->
-        <div class="genre-filters mt-4">
-            <a asp-action="Cartelera" asp-route-genero="Todos" class="filter-chip @(generoSel == "Todos" ? "active" : "")">Todos</a>
-            <a asp-action="Cartelera" asp-route-genero="Acción" class="filter-chip @(generoSel == "Acción" ? "active" : "")">💥 Acción</a>
-            <a asp-action="Cartelera" asp-route-genero="Terror" class="filter-chip @(generoSel == "Terror" ? "active" : "")">👁️ Terror</a>
-            <a asp-action="Cartelera" asp-route-genero="Animación" class="filter-chip @(generoSel == "Animación" ? "active" : "")">🎨 Animación</a>
-            <a asp-action="Cartelera" asp-route-genero="Ciencia ficción" class="filter-chip @(generoSel == "Ciencia ficción" ? "active" : "")">🚀 Ciencia Ficción</a>
+        <div class="genre-filters mt-4 d-flex justify-content-center flex-wrap gap-2">
+            <a asp-action="Cartelera" asp-route-genero="Todos" class="filter-chip @(generoSel == "Todos" ? "active" : "")">
+                <i class="bi bi-grid-fill me-1"></i> Todos
+            </a>
+            <a asp-action="Cartelera" asp-route-genero="Acción" class="filter-chip @(generoSel == "Acción" ? "active" : "")">
+                <i class="bi bi-lightning-charge-fill me-1"></i> Acción
+            </a>
+            <a asp-action="Cartelera" asp-route-genero="Terror" class="filter-chip @(generoSel == "Terror" ? "active" : "")">
+                <i class="bi bi-eye-fill me-1"></i> Terror
+            </a>
+            <a asp-action="Cartelera" asp-route-genero="Animación" class="filter-chip @(generoSel == "Animación" ? "active" : "")">
+                <i class="bi bi-palette-fill me-1"></i> Animación
+            </a>
+            <a asp-action="Cartelera" asp-route-genero="Ciencia ficción" class="filter-chip @(generoSel == "Ciencia ficción" ? "active" : "")">
+                <i class="bi bi-rocket-takeoff-fill me-1"></i> Ciencia Ficción
+            </a>
         </div>
     </div>
 </section>
@@ -25,9 +37,12 @@
 <section class="movies-section container py-5">
     @if (Model == null || !Model.Any())
     {
-        <div class="text-center py-5">
-            <h3>No se encontraron películas para este filtro.</h3>
-            <a asp-action="Cartelera" class="btn-glow-gold mt-3">Ver todas las películas</a>
+        <div class="text-center py-5 border border-secondary border-opacity-25 rounded-4 p-5" style="background: var(--bg-card);">
+            <i class="bi bi-search fs-1 text-gold mb-3 d-block"></i>
+            <h3 class="text-light">No se encontraron películas para el género "@generoSel".</h3>
+            <a asp-action="Cartelera" class="btn-glow-gold mt-3 d-inline-block border-0 text-dark">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Ver todas las películas
+            </a>
         </div>
     }
     else
@@ -36,29 +51,41 @@
             @foreach (var pelicula in Model)
             {
                 <div class="col-lg-6">
-                    <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="text-decoration-none">
-                        <div class="movie-horizontal-card">
-                            <div class="poster-box">
-                                <img src="@pelicula.Imagen" alt="@pelicula.Titulo" class="movie-poster-horizontal" />
-                                <span class="badge-format">⭐ @pelicula.Calificacion</span>
+                    <div class="movie-horizontal-card shadow-lg h-100">
+                        <div class="poster-box position-relative">
+                            <img src="@pelicula.Imagen" alt="Poster de @pelicula.Titulo" class="movie-poster-horizontal" />
+                            <span class="badge-format position-absolute top-0 start-0 m-3">
+                                <i class="bi bi-star-fill text-warning me-1"></i> @pelicula.Calificacion
+                            </span>
+                        </div>
+                        <div class="movie-detail-box d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="genre-tag">
+                                    <i class="bi bi-tag-fill me-1"></i> @pelicula.Genero
+                                </span>
+                                <span class="badge bg-secondary text-light px-2 py-1 fs-6">
+                                    <i class="bi bi-shield-exclamation me-1"></i> @pelicula.Clasificacion
+                                </span>
                             </div>
-                            <div class="movie-detail-box">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="genre-tag">@pelicula.Genero</span>
-                                    <span class="rating-pill">🔞 @pelicula.Clasificacion</span>
-                                </div>
-                                <h3 class="text-light fs-4 mb-2">@pelicula.Titulo</h3>
-                                <p class="text-muted small line-clamp-2">@pelicula.Descripcion</p>
-                                <div class="meta-info my-2">
-                                    <span class="text-light small">⏱️ <strong>Duración:</strong> @pelicula.Duracion</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary border-opacity-25">
-                                    <span class="text-gold font-weight-bold">ℹ️ Ver detalles &rarr;</span>
-                                    <span class="btn-primary-action py-1 px-3 fs-6">🎟️ Reservar</span>
-                                </div>
+                            <h3 class="text-light fs-4 font-weight-bold mb-2">@pelicula.Titulo</h3>
+                            <p class="text-muted small mb-3 flex-grow-1">@pelicula.Descripcion</p>
+                            
+                            <div class="meta-info mb-3">
+                                <span class="text-light small">
+                                    <i class="bi bi-clock me-1 text-gold"></i> <strong>Duración:</strong> @pelicula.Duracion
+                                </span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center gap-2 mt-auto pt-3 border-top border-secondary border-opacity-25">
+                                <a asp-controller="Home" asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn-glass py-2 px-3 fs-6 flex-grow-1 text-center text-decoration-none">
+                                    <i class="bi bi-info-circle me-1"></i> Detalles
+                                </a>
+                                <a asp-controller="Home" asp-action="Comprar" asp-route-id="@pelicula.Id" class="btn-glow-gold py-2 px-3 fs-6 flex-grow-1 text-center border-0 text-dark text-decoration-none font-weight-bold">
+                                    <i class="bi bi-ticket-detailed-fill me-1"></i> Comprar
+                                </a>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             }
         </div>

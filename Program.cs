@@ -1,7 +1,11 @@
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de Servicios MVC y Sesiones para el sistema de Login
+// MVC
 builder.Services.AddControllersWithViews();
+
+// Sesiones para Login
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -11,6 +15,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
+// Configuración de errores
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -21,11 +26,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Activar sesiones
 app.UseSession();
+
 app.UseAuthorization();
 
+// Página inicial: Login
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Login}/{id?}");
 
 app.Run();
