@@ -1,65 +1,59 @@
+// Clean HomeController – single definition
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using CINESMART.Data;
 using CINESMART.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CINESMART.Controllers
 {
-    // Controlador principal en C# con subprogramas sencillos y modularidad
     public class HomeController : Controller
     {
-        // 1. Subprograma: Inicio
+        // 1. Inicio – muestra 3 películas destacadas
         public IActionResult Index()
         {
             var destacadas = CineData.Peliculas.Take(3).ToList();
             return View(destacadas);
         }
 
-        // 2. Subprograma: Cartelera con filtro por género
+        // 2. Cartelera con filtro por género
         public IActionResult Cartelera(string? genero)
         {
             var peliculas = CineData.Peliculas;
             if (!string.IsNullOrWhiteSpace(genero) && genero != "Todos")
             {
-                peliculas = peliculas.Where(p => p.Genero.Equals(genero, StringComparison.OrdinalIgnoreCase)).ToList();
+                peliculas = peliculas
+                    .Where(p => p.Genero.Equals(genero, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
             ViewBag.GeneroSeleccionado = genero ?? "Todos";
             return View(peliculas);
         }
 
-        // 3. Subprograma: Detalles de Película
+        // 3. Detalles de película
         public IActionResult Detalles(int id)
         {
             var pelicula = CineData.ObtenerPeliculaPorId(id);
-            if (pelicula == null)
-            {
-                return NotFound();
-            }
-
+            if (pelicula == null) return NotFound();
             ViewBag.Funciones = CineData.ObtenerFuncionesPorPelicula(id);
             return View(pelicula);
         }
 
-        // 4. PASO 1 de Compra: Entradas + Asientos + Datos
+        // 4. Paso 1 de compra – elegir función y asientos
         public IActionResult Comprar(int id = 1)
         {
             var pelicula = CineData.ObtenerPeliculaPorId(id);
-            if (pelicula == null)
-            {
-                return NotFound();
-            }
-
+            if (pelicula == null) return NotFound();
             ViewBag.Funciones = CineData.ObtenerFuncionesPorPelicula(id);
             return View(pelicula);
         }
 
-        // 5. PASO 2 de Compra: Selección de Combos de comida con fotos reales
+        // 5. Paso 2 de compra – seleccionar combos (fotos reales)
         [HttpPost]
-        public IActionResult AgregarCombo(
-            string cliente,
-            string correo,
-            int funcionId,
-            int cantidadEntradas,
-            string? asientosSeleccionados)
+        public IActionResult AgregarCombo(string cliente, string correo,
+            int funcionId, int cantidadEntradas, string? asientosSeleccionados)
         {
             var funcion = CineData.Funciones.FirstOrDefault(f => f.Id == funcionId);
             if (funcion == null) return NotFound();
@@ -68,14 +62,12 @@ namespace CINESMART.Controllers
             if (pelicula == null) return NotFound();
 
             if (cantidadEntradas < 1) cantidadEntradas = 1;
+            var subtotal = funcion.Precio * cantidadEntradas;
 
-            decimal subtotal = funcion.Precio * cantidadEntradas;
-
-            List<string> listaAsientos = new();
-            if (!string.IsNullOrWhiteSpace(asientosSeleccionados))
-            {
-                listaAsientos = asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-            }
+            var listaAsientos = string.IsNullOrWhiteSpace(asientosSeleccionados)
+                ? new List<string>()
+                : asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries
+                                             | StringSplitOptions.TrimEntries).ToList();
 
             ViewBag.Cliente = cliente;
             ViewBag.Correo = correo;
@@ -84,20 +76,14 @@ namespace CINESMART.Controllers
             ViewBag.CantidadEntradas = cantidadEntradas;
             ViewBag.AsientosSeleccionados = string.Join(",", listaAsientos);
             ViewBag.Subtotal = subtotal;
-            ViewBag.Combos = CineData.Combos;
-
+            ViewBag.Combos = CineData.Combos; // <-- aquí tienes las imágenes reales de los combos
             return View("AgregarCombo");
         }
 
-        // 6. Procesa la reserva final y emite el boleto con QR
+        // 6. Confirmar compra – genera QR y guarda reserva
         [HttpPost]
-        public IActionResult ConfirmarCompra(
-            string cliente,
-            string correo,
-            int funcionId,
-            int cantidadEntradas,
-            string? asientosSeleccionados,
-            int? comboId)
+        public IActionResult ConfirmarCompra(string cliente, string correo,
+            int funcionId, int cantidadEntradas, string? asientosSeleccionados, int? comboId)
         {
             var funcion = CineData.Funciones.FirstOrDefault(f => f.Id == funcionId);
             if (funcion == null) return NotFound();
@@ -106,19 +92,17 @@ namespace CINESMART.Controllers
             if (pelicula == null) return NotFound();
 
             if (cantidadEntradas < 1) cantidadEntradas = 1;
-
             var combo = CineData.ObtenerComboPorId(comboId);
-            decimal precioCombos = combo?.Precio ?? 0;
-            decimal precioEntradas = funcion.Precio * cantidadEntradas;
-            decimal total = precioEntradas + precioCombos;
+            var precioCombos = combo?.Precio ?? 0;
+            var precioEntradas = funcion.Precio * cantidadEntradas;
+            var total = precioEntradas + precioCombos;
 
-            List<string> listaAsientos = new();
-            if (!string.IsNullOrWhiteSpace(asientosSeleccionados))
-            {
-                listaAsientos = asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-            }
+            var listaAsientos = string.IsNullOrWhiteSpace(asientosSeleccionados)
+                ? new List<string>()
+                : asientosSeleccionados.Split(',', StringSplitOptions.RemoveEmptyEntries
+                                             | StringSplitOptions.TrimEntries).ToList();
 
-            string codigoGenerado = $"CS-{Random.Shared.Next(100000, 999999)}";
+            var codigoGenerado = $"CS-{Random.Shared.Next(100000, 999999)}";
 
             var compra = new Compra
             {
@@ -141,62 +125,75 @@ namespace CINESMART.Controllers
             };
 
             CineData.Reservas.Add(compra);
-
             return View("Confirmacion", compra);
         }
 
-        // 7. Subprograma: Combos & Dulcería (Vista independiente)
+        // 7. Vista de combos
         public IActionResult Combos()
         {
             return View(CineData.Combos);
         }
 
-        // 8. Subprograma: Login de Usuarios (Sencillo y para estudiantes)
+        // 8. Login (GET)
         public IActionResult Login()
         {
             return View();
         }
 
+        // 9. Login (POST)
         [HttpPost]
-        public IActionResult Login(string usuario, string clave)
+        public IActionResult Login(string correo, string clave)
         {
-            // Verificación limpia de usuario
-            if (usuario == "admin" && clave == "1234")
+            var usuario = CineData.ValidarLogin(correo, clave);
+            if (usuario != null)
             {
-                HttpContext.Session.SetString("Usuario", "Administrador");
-                return RedirectToAction("Admin");
+                HttpContext.Session.SetString("Usuario", usuario.Nombre);
+                HttpContext.Session.SetString("Rol", usuario.Rol);
+                return usuario.Rol == "admin" ? RedirectToAction("Admin") : RedirectToAction("Index");
             }
-            else if (usuario == "kevin" && clave == "1234")
-            {
-                HttpContext.Session.SetString("Usuario", "Kevin Balcazar");
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Error = "Usuario o contraseña incorrectos. Intenta con kevin / 1234 o admin / 1234";
+            ViewBag.Error = "Correo o contraseña incorrectos. Usa admin@cinesmart.com / admin123 o kevin@correo.com / 1234";
             return View();
         }
 
+        // 10. Cerrar sesión
         public IActionResult CerrarSesion()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
         }
 
-        // 9. Subprograma: Panel de Administración
+        // 11. Registro (GET)
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // 12. Registro (POST)
+        [HttpPost]
+        public IActionResult Register(string nombre, string correo, string clave)
+        {
+            bool ok = CineData.RegistrarUsuario(nombre, correo, clave);
+            if (ok)
+            {
+                HttpContext.Session.SetString("Usuario", nombre);
+                HttpContext.Session.SetString("Rol", "cliente");
+                return RedirectToAction("Index");
+            }
+            ViewBag.Error = "El correo ya está registrado. Por favor usa otro.";
+            return View();
+        }
+
+        // 13. Panel de administración (admin only)
         public IActionResult Admin()
         {
-            // Validar si es administrador
-            var usuario = HttpContext.Session.GetString("Usuario");
-            if (usuario != "Administrador")
-            {
-                ViewBag.MensajeAdmin = "Ingresa con el usuario de administrador (admin / 1234) para gestionar el panel.";
-            }
+            var rol = HttpContext.Session.GetString("Rol");
+            if (rol != "admin")
+                return RedirectToAction("Login");
 
             ViewBag.TotalRecaudado = CineData.Reservas.Sum(r => r.Total);
-            ViewBag.TotalBoletos = CineData.Reservas.Sum(r => r.CantidadEntradas);
-            ViewBag.TotalReservas = CineData.Reservas.Count;
-
+            ViewBag.TotalBoletos   = CineData.Reservas.Sum(r => r.CantidadEntradas);
+            ViewBag.TotalReservas  = CineData.Reservas.Count;
             return View(CineData.Reservas);
         }
     }
-}
+}   
